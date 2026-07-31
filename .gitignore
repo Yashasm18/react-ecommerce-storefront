@@ -41,6 +41,11 @@ Thumbs.db
 *.tar.gz
 *.rar
 
+# Copyrighted content (book text)
+book_content.txt
+*.draft
+*.manuscript
+
 # Coverage & testing
 coverage/
 *.lcov
