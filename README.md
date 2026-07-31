@@ -110,34 +110,6 @@ A full-stack e-commerce storefront designed and built from scratch to sell an in
 
 ---
 
-## Project Structure
-
-```
-react-ecommerce-storefront/
-├── api/                          # Vercel serverless functions
-│   ├── create-order.js           # Razorpay order creation
-│   ├── verify-payment.js         # HMAC-SHA256 payment signature verification
-│   └── send-confirmation.js      # Resend email dispatch
-├── public/                       # Static assets
-│   ├── book-cover*.png           # Product images
-│   ├── reader-dm*.jpg            # Reader testimonial screenshots
-│   ├── reader-video*.mp4         # Reader testimonial videos
-│   ├── sitemap.xml               # SEO sitemap
-│   └── robots.txt                # Search engine directives
-├── src/
-│   ├── App.jsx                   # Main application component (~2100 lines)
-│   ├── App.css                   # Component-specific styles
-│   ├── index.css                 # Global styles & design tokens
-│   └── main.jsx                  # Entry point with Clerk provider
-├── .env.example                  # Environment variable template
-├── vercel.json                   # Security headers & deployment config
-├── vite.config.js                # Vite build configuration
-├── SECURITY.md                   # Security policy & practices
-└── LICENSE                       # MIT License
-```
-
----
-
 ## 🔒 Security
 
 This project follows security best practices:
@@ -162,6 +134,17 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 
 <div align="center">
 
-**Built by [Yashas M](https://github.com/Yashasm18)**
+## 💼 Want a Website Like This?
+
+**Need a production-ready e-commerce store, portfolio, or business website?**
+I build fast, secure, and beautiful web applications from scratch — tailored to your brand.
+
+📧 **Get in touch:** [yashacm1807@gmail.com](mailto:yashacm1807@gmail.com)
+
+Whether it's a storefront with payment integration, a personal brand site, or a custom web app — let's build something great together.
+
+---
+
+**Built & engineered by [Yashas M](https://github.com/Yashasm18)**
 
 </div>
