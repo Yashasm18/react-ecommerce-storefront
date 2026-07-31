@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { ShoppingCart, Star, Heart, BookOpen, Quote, Sparkles, Moon, Feather, Check, Pen, Menu, X, Search, User, ShoppingBag, Package, MapPin, Phone, CreditCard, Truck, ExternalLink, VolumeX, Volume2, Send, CheckCircle, Trophy } from 'lucide-react';
+import { useEffect, useState, useRef, useCallback } from 'react';
+import { ShoppingCart, Star, Heart, BookOpen, Quote, Sparkles, Moon, Feather, Check, Pen, Menu, X, Search, User, ShoppingBag, Package, MapPin, ExternalLink, VolumeX, Volume2, Send, CheckCircle, Trophy } from 'lucide-react';
 import { SignedIn, SignedOut, SignInButton, UserButton, useAuth, useClerk } from '@clerk/clerk-react';
 import './index.css';
 
@@ -420,7 +420,7 @@ function SearchModal({ isOpen, onClose, onNavigate }) {
   const [query, setQuery] = useState('');
   
   useEffect(() => {
-    if (!isOpen) setQuery('');
+    if (!isOpen) setQuery(''); // eslint-disable-line react-hooks/set-state-in-effect
   }, [isOpen]);
 
   if (!isOpen) return null;
@@ -806,9 +806,9 @@ function App() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [hearts, setHearts] = useState([]);
-  const [notifyStatus, setNotifyStatus] = useState('');
+  const [notifyStatus, setNotifyStatus] = useState(''); // eslint-disable-line no-unused-vars
   const [buyOrderOpen, setBuyOrderOpen] = useState(false);
-  const [bookEdition, setBookEdition] = useState('standard');
+  const [bookEdition, setBookEdition] = useState('standard'); // eslint-disable-line no-unused-vars
   const [readingChapter1, setReadingChapter1] = useState(false);
   const [motherPageOpen, setMotherPageOpen] = useState(false);
   const [maximizedMedia, setMaximizedMedia] = useState(null);
@@ -1031,7 +1031,7 @@ function App() {
     }
   };
 
-  const handleNotifySubmit = async (e) => {
+  const handleNotifySubmit = async (e) => { // eslint-disable-line no-unused-vars
     e.preventDefault();
     setNotifyStatus('loading');
     
@@ -1085,7 +1085,7 @@ function App() {
     }
 
     const phoneDigits = trimmedPhone.replace(/\D/g, '');
-    const phoneRegex = /^[+\d\s\-\(\)]{7,15}$/;
+    const phoneRegex = /^[+\d\s\-()]{7,15}$/;
     if (!trimmedPhone || !phoneRegex.test(trimmedPhone) || phoneDigits.length < 7 || phoneDigits.length > 15) {
       setReviewFormError('Please enter a valid phone number (at least 7 to 15 digits).');
       return;

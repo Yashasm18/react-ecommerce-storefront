@@ -12,6 +12,7 @@
 ![Clerk](https://img.shields.io/badge/Clerk-Auth-6C47FF?style=for-the-badge&logo=clerk&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Vercel-Deployed-000000?style=for-the-badge&logo=vercel&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+![CI](https://github.com/Yashasm18/react-ecommerce-storefront/actions/workflows/ci.yml/badge.svg)
 
 </div>
 
