@@ -14,9 +14,9 @@
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 ![CI](https://img.shields.io/github/actions/workflow/status/Yashasm18/react-ecommerce-storefront/ci.yml?style=for-the-badge&logo=githubactions&logoColor=white&label=CI)
 
-![Amazon](https://img.shields.io/badge/Amazon-Available-FF9900?style=for-the-badge&logo=amazon&logoColor=white)
-![Flipkart](https://img.shields.io/badge/Flipkart-Available-2874F0?style=for-the-badge&logo=flipkart&logoColor=white)
-![Notion Press](https://img.shields.io/badge/Notion%20Press-Published-E03C31?style=for-the-badge&logo=bookstack&logoColor=white)
+[![Amazon](https://img.shields.io/badge/Amazon-Available-FF9900?style=for-the-badge&logo=amazon&logoColor=white)](https://www.amazon.com/dp/B0H3M7Y1JC)
+[![Flipkart](https://img.shields.io/badge/Flipkart-Available-2874F0?style=for-the-badge&logo=flipkart&logoColor=white)](https://www.flipkart.com/you-made-me-quiet-journey-love-care-silent-feelings/p/itm47a6a816e5730?pid=9798905105067)
+[![Notion Press](https://img.shields.io/badge/Notion%20Press-Published-E03C31?style=for-the-badge&logo=bookstack&logoColor=white)](https://notionpress.com/in/read/you-made-me-quiet)
 
 <br>
 
@@ -34,7 +34,7 @@ A full-stack e-commerce storefront designed and built from scratch to sell an in
 
 > **Live at:** [wordsofvamshi.com](https://wordsofvamshi.com)
 
-📚 **Also available on [Amazon](https://amazon.in), [Flipkart](https://flipkart.com), and [Notion Press](https://notionpress.com)** — the book is sold across India's top online marketplaces, not only through this website.
+📚 **Also available on [Amazon](https://www.amazon.com/dp/B0H3M7Y1JC), [Flipkart](https://www.flipkart.com/you-made-me-quiet-journey-love-care-silent-feelings/p/itm47a6a816e5730?pid=9798905105067), and [Notion Press](https://notionpress.com/in/read/you-made-me-quiet)** — the book is sold across India's top online marketplaces, not only through this website.
 
 ---
 
