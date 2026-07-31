@@ -14,6 +14,10 @@
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 ![CI](https://img.shields.io/github/actions/workflow/status/Yashasm18/react-ecommerce-storefront/ci.yml?style=for-the-badge&logo=githubactions&logoColor=white&label=CI)
 
+![Amazon](https://img.shields.io/badge/Amazon-Available-FF9900?style=for-the-badge&logo=amazon&logoColor=white)
+![Flipkart](https://img.shields.io/badge/Flipkart-Available-2874F0?style=for-the-badge&logo=flipkart&logoColor=white)
+![Notion Press](https://img.shields.io/badge/Notion%20Press-Published-E03C31?style=for-the-badge&logo=bookstack&logoColor=white)
+
 </div>
 
 ---
