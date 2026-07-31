@@ -1,0 +1,100 @@
+# ============================================
+# CI Pipeline — Build, Lint & Security Checks
+# ============================================
+# Runs on every push to main and on every pull request.
+# Ensures code quality and prevents broken deploys.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # ─────────────────────────────────────────
+  # Job 1: Build & Lint
+  # ─────────────────────────────────────────
+  build:
+    name: Build & Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Build project
+        run: npm run build
+        env:
+          VITE_CLERK_PUBLISHABLE_KEY: ${{ secrets.VITE_CLERK_PUBLISHABLE_KEY }}
+          VITE_RAZORPAY_KEY_ID: ${{ secrets.VITE_RAZORPAY_KEY_ID }}
+          VITE_WEB3FORMS_KEY: ${{ secrets.VITE_WEB3FORMS_KEY }}
+
+  # ─────────────────────────────────────────
+  # Job 2: Security — Secret Leak Detection
+  # ─────────────────────────────────────────
+  security:
+    name: Secret Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Scan for leaked secrets
+        run: |
+          echo "🔍 Scanning for hardcoded secrets..."
+          FAILED=0
+
+          # Razorpay keys
+          if grep -rn 'rzp_live\|rzp_test' --include='*.jsx' --include='*.js' --include='*.html' --exclude-dir=node_modules .; then
+            echo "❌ FAIL: Razorpay key found in source code!"
+            FAILED=1
+          fi
+
+          # Clerk keys
+          if grep -rnE '(pk_test|sk_test|pk_live|sk_live)_[A-Za-z0-9]' --include='*.jsx' --include='*.js' --exclude-dir=node_modules .; then
+            echo "❌ FAIL: Clerk key found in source code!"
+            FAILED=1
+          fi
+
+          # Web3Forms UUID keys
+          if grep -rnE '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}' --include='*.jsx' --include='*.js' --exclude-dir=node_modules .; then
+            echo "❌ FAIL: UUID-format key found in source code!"
+            FAILED=1
+          fi
+
+          # Resend keys
+          if grep -rnE 're_[A-Za-z0-9]{10,}' --include='*.jsx' --include='*.js' --exclude-dir=node_modules .; then
+            echo "❌ FAIL: Resend API key found in source code!"
+            FAILED=1
+          fi
+
+          # .env files accidentally committed
+          if git ls-files | grep -E '^\.env$|^\.env\.local$'; then
+            echo "❌ FAIL: .env file found in repository!"
+            FAILED=1
+          fi
+
+          if [ $FAILED -eq 1 ]; then
+            echo ""
+            echo "🚫 Secret scan FAILED — fix the issues above before merging."
+            exit 1
+          else
+            echo "✅ No secrets detected. All clear!"
+          fi
