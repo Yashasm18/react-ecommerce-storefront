@@ -139,7 +139,7 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 **Need a production-ready e-commerce store, portfolio, or business website?**
 I build fast, secure, and beautiful web applications from scratch — tailored to your brand.
 
-📧 **Get in touch:** [yashacm1807@gmail.com](mailto:yashacm1807@gmail.com)
+📧 **Get in touch:** [yashasm1807@gmail.com](mailto:yashasm1807@gmail.com)
 
 Whether it's a storefront with payment integration, a personal brand site, or a custom web app — let's build something great together.
 
