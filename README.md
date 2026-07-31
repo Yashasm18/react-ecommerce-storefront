@@ -17,7 +17,7 @@
 
 ---
 
-## ✨ Overview
+## Overview
 
 A full-stack e-commerce storefront designed and built from scratch to sell an indie poetry book — **"You Made Me Quiet"** by Vamshi. This isn't a template or a tutorial clone — it's a **production application** actively serving real customers with live payment processing, automated order notifications, and transactional emails.
 
@@ -25,7 +25,7 @@ A full-stack e-commerce storefront designed and built from scratch to sell an in
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────┐
@@ -50,32 +50,32 @@ A full-stack e-commerce storefront designed and built from scratch to sell an in
 
 ---
 
-## 🚀 Features
+## Features
 
-### 🛒 E-Commerce Core
+### E-Commerce Core
 - **Shopping cart** with add/remove, quantity controls, and persistent state
 - **Multi-edition support** — Standard & Author's Edition with different pricing
 - **Buy Now & Cart checkout** flows
 - **Responsive checkout** with delivery form and order summary
 
-### 💳 Payment Integration
+### Payment Integration
 - **Razorpay payment gateway** — live payment processing in INR
 - **Server-side order creation** via Vercel serverless functions
 - **Cryptographic payment verification** using HMAC-SHA256 signature validation
 - **Error handling** — graceful recovery for failed/cancelled payments
 
-### 🔐 Authentication & Security
+### Authentication & Security
 - **Clerk authentication** — sign-in/sign-up with social providers
 - **Auth-gated actions** — cart and checkout require authentication
 - **HTTP security headers** — HSTS, X-Frame-Options, CSP, XSS protection
 - **Environment variable isolation** — zero hardcoded secrets
 
-### 📧 Notifications & Emails
+### Notifications & Emails
 - **Web3Forms integration** — order notifications to the author
 - **Resend API** — automated HTML confirmation emails to buyers
 - **Event tracking** — Chapter 1 read tracking, review submissions
 
-### 🎨 UI/UX
+### UI/UX
 - **Fully responsive** — mobile-first design, works on all screen sizes
 - **Image carousel** — auto-rotating hero section with 8 book photos
 - **Interactive hearts animation** — cursor-following heart emojis
@@ -85,7 +85,7 @@ A full-stack e-commerce storefront designed and built from scratch to sell an in
 - **Toast notifications** — feedback for cart actions
 - **Policy modals** — Privacy, Refund, Shipping, and Terms of Service
 
-### 📈 SEO & Performance
+### SEO & Performance
 - **Open Graph & Twitter Card** meta tags for social sharing
 - **JSON-LD structured data** — Book schema for search engines
 - **Sitemap & robots.txt** — search engine crawling support
@@ -93,7 +93,7 @@ A full-stack e-commerce storefront designed and built from scratch to sell an in
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer | Technology | Purpose |
 |-------|-----------|---------|
@@ -109,7 +109,7 @@ A full-stack e-commerce storefront designed and built from scratch to sell an in
 
 ---
 
-## 📦 Project Structure
+## Project Structure
 
 ```
 react-ecommerce-storefront/
@@ -137,7 +137,7 @@ react-ecommerce-storefront/
 
 ---
 
-## ⚡ Quick Start
+## Quick Start
 
 ### Prerequisites
 
@@ -230,6 +230,6 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 
 <div align="center">
 
-**Built with ❤️ by [Yashas M](https://github.com/Yashasm18)**
+**Built by [Yashas M](https://github.com/Yashasm18)**
 
 </div>
