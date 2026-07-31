@@ -138,53 +138,6 @@ react-ecommerce-storefront/
 
 ---
 
-## Quick Start
-
-### Prerequisites
-
-- **Node.js** ≥ 18.x
-- **npm** ≥ 9.x
-- Accounts on: [Razorpay](https://razorpay.com), [Clerk](https://clerk.com), [Web3Forms](https://web3forms.com), [Resend](https://resend.com)
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/Yashasm18/react-ecommerce-storefront.git
-cd react-ecommerce-storefront
-```
-
-### 2. Install dependencies
-
-```bash
-npm install
-```
-
-### 3. Set up environment variables
-
-```bash
-cp .env.example .env
-cp .env.example .env.local
-```
-
-Edit both files and fill in your API keys. See [`.env.example`](.env.example) for details.
-
-### 4. Start the development server
-
-```bash
-npm run dev
-```
-
-The app will be available at `http://localhost:5173`
-
-### 5. Build for production
-
-```bash
-npm run build
-npm run preview   # Preview the production build
-```
-
----
-
 ## 🔒 Security
 
 This project follows security best practices:
@@ -195,31 +148,9 @@ This project follows security best practices:
 - ✅ **Security headers** — HSTS, X-Frame-Options, nosniff, XSS protection
 - ✅ **Input validation** — form validation with email, phone, and length checks
 - ✅ **Content protection** — context menu and dev tools shortcuts disabled in production
+- ✅ **CI/CD pipeline** — automated lint, build, and secret scanning on every push
 
 See [SECURITY.md](SECURITY.md) for the full security policy and vulnerability reporting.
-
----
-
-## 🚢 Deployment
-
-This project is deployed on **Vercel** with automatic deployments on push.
-
-### Deploy to Vercel
-
-1. Import this repository on [Vercel](https://vercel.com/new)
-2. Add all environment variables from `.env.example` to the Vercel dashboard
-3. Deploy — Vercel auto-detects the Vite framework
-
-### Environment Variables (Vercel Dashboard)
-
-| Variable | Where to Get It |
-|----------|----------------|
-| `RAZORPAY_KEY_ID` | [Razorpay Dashboard](https://dashboard.razorpay.com/app/keys) |
-| `RAZORPAY_KEY_SECRET` | [Razorpay Dashboard](https://dashboard.razorpay.com/app/keys) |
-| `VITE_RAZORPAY_KEY_ID` | Same as `RAZORPAY_KEY_ID` |
-| `VITE_CLERK_PUBLISHABLE_KEY` | [Clerk Dashboard](https://dashboard.clerk.com) |
-| `VITE_WEB3FORMS_KEY` | [Web3Forms](https://web3forms.com) |
-| `RESEND_API_KEY` | [Resend Dashboard](https://resend.com/api-keys) |
 
 ---
 
