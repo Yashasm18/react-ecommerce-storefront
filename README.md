@@ -18,6 +18,12 @@
 ![Flipkart](https://img.shields.io/badge/Flipkart-Available-2874F0?style=for-the-badge&logo=flipkart&logoColor=white)
 ![Notion Press](https://img.shields.io/badge/Notion%20Press-Published-E03C31?style=for-the-badge&logo=bookstack&logoColor=white)
 
+<br>
+
+### 🏆 #1 Notion Press Bestseller · 30,000+ Copies Sold
+
+*As of July 2026*
+
 </div>
 
 ---
@@ -27,6 +33,8 @@
 A full-stack e-commerce storefront designed and built from scratch to sell an indie poetry book — **"You Made Me Quiet"** by Vamshi. This isn't a template or a tutorial clone — it's a **production application** actively serving real customers with live payment processing, automated order notifications, and transactional emails.
 
 > **Live at:** [wordsofvamshi.com](https://wordsofvamshi.com)
+
+📚 **Also available on [Amazon](https://amazon.in), [Flipkart](https://flipkart.com), and [Notion Press](https://notionpress.com)** — the book is sold across India's top online marketplaces, not only through this website.
 
 ---
 
