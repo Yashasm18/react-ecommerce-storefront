@@ -76,10 +76,11 @@ A full-stack e-commerce storefront designed and built from scratch to sell an in
 
 ## ✨ Visual Showcase
 
-| Storefront UI | Reader Experience |
+| Desktop Storefront Experience | Mobile Responsive View |
 | :---: | :---: |
-| ![Hero Carousel](public/og-image.png) | ![Reader Moments Gallery](public/og-image.png) |
-| *Auto-rotating hero carousel & interactive edition selector* | *Community photo & video gallery with full-screen modal* |
+| ![Desktop Storefront UI](public/preview-desktop.png) | ![Mobile Responsive View](public/preview-mobile.png) |
+| *Desktop hero section with live book showcase & navigation* | *Responsive mobile layout with top bestseller badges & quick shop* |
+
 
 ---
 
