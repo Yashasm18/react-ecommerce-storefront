@@ -188,7 +188,7 @@ This project follows security best practices:
 - ✅ **HMAC-SHA256 signature verification** — prevents payment tampering
 - ✅ **Security headers** — HSTS, X-Frame-Options, nosniff, XSS protection
 - ✅ **Input validation** — form validation with email, phone, and length checks
-- ✅ **Content protection** — context menu and dev tools shortcuts disabled in production
+- ✅ **Content protection** — context menu and dev tools shortcuts disabled in Production
 - ✅ **CI/CD pipeline** — automated lint, build, and secret scanning on every push
 
 See [SECURITY.md](SECURITY.md) for the full security policy and vulnerability reporting.
