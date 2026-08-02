@@ -21,6 +21,7 @@
 <br>
 
 ### 🏆 #1 Notion Press Bestseller · 30,000+ Copies Sold
+###     Made for readers who actually read through their heart and maintain the same passion!
 
 *As of July 2026*
 
