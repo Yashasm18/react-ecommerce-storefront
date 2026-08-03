@@ -75,7 +75,7 @@ A full-stack e-commerce storefront designed and built from scratch to sell an in
 
 ---
 
-## ✨ Visual Showcase
+## Visual Showcase
 
 | Desktop Storefront Experience | Mobile Responsive View |
 | :---: | :---: |
@@ -128,7 +128,7 @@ A full-stack e-commerce storefront designed and built from scratch to sell an in
 
 ---
 
-## 🎨 Design & UI/UX Highlights
+## Design & UI/UX Highlights
 
 - 🍷 **Literary Warm Aesthetic** — Palette tailored specifically to match the emotional tone of the poetry book.
 - ✨ **Interactive Floating Hearts** — Dynamic cursor-following particle animation for high engagement.
@@ -179,7 +179,7 @@ Built and optimized for high-speed performance, accessibility, and search engine
 
 ---
 
-## 🔒 Security
+## Security
 
 This project follows security best practices:
 
