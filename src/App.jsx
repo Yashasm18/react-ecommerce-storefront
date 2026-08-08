@@ -1495,8 +1495,8 @@ function App() {
               </div>
               <div className="book-copies-badge">
                 <span style={{ fontSize: '1.2rem', marginBottom: '2px' }}>🎉</span>
-                <span>30000+ SOLD</span>
-                IN 68 DAYS
+                <span>53,000+ SOLD</span>
+                IN 3 MONTHS
               </div>
             </div>
           </div>
