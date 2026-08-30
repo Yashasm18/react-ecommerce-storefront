@@ -30,7 +30,6 @@ export default function BrandLogo({
           <span className="brand-word-of">of</span>
           <span className="brand-word-vamshi">
             Vamshi
-            <span className="brand-heart-accent" aria-hidden="true">♥</span>
           </span>
         </span>
 

@@ -1,50 +1,18 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
-import { ShoppingCart, Star, Heart, BookOpen, Quote, Sparkles, Moon, Feather, Check, Pen, Menu, X, Search, User, ShoppingBag, Package, MapPin, ExternalLink, VolumeX, Volume2, Send, CheckCircle, Trophy } from 'lucide-react';
+import { ShoppingCart, Star, BookOpen, Feather, Check, Menu, X, Search, User, ShoppingBag, Package, MapPin, ExternalLink, VolumeX, Volume2, Send, CheckCircle, Trophy, ChevronDown, ArrowRight, TrendingUp, Mail, FileText } from 'lucide-react';
 import { SignedIn, SignedOut, SignInButton, UserButton, useAuth, useClerk } from '@clerk/clerk-react';
 import BrandLogo from './BrandLogo.jsx';
 import './index.css';
 
 const HEART_EMOJIS = ['❤️', '🧡', '💛', '💕', '💖', '💗', '🤍', '♥️'];
 
-const SECTIONS = ['home', 'about-book', 'reviews', 'author', 'shop'];
+const SECTIONS = ['home', 'author', 'reviews', 'shop'];
 
-// Stylized "Vamshi" with a heart replacing the dot on the "i"
+// Clean "Vamshi" text
 const VamshiName = ({ className = '' }) => (
-  <span className={`vamshi-name ${className}`}>Vamsh<span className="vamshi-i">ı</span></span>
+  <span className={`vamshi-name ${className}`}>Vamshi</span>
 );
 
-const REVIEWS = [
-  {
-    name: 'Sharvani Iyer',
-    text: 'This book felt like a warm hug! The emotions were so raw and real — I cried and found myself completely immersed. A true masterpiece that speaks to the soul.',
-    rating: 5,
-  },
-  {
-    name: 'Darsh Mahapatra',
-    text: 'A poetry collection that captures the quiet side of love beautifully. Every page feels like a personal letter. Vamshi\'s writing is masterful and deeply moving.',
-    rating: 5,
-  },
-  {
-    name: 'Tanishqa Bansal',
-    text: 'Finished it in one sitting. I was left with a heart full of feelings and tears I didn\'t expect. Vamshi knows exactly how to touch your soul.',
-    rating: 5,
-  },
-  {
-    name: 'Vihaan Sood',
-    text: 'Beautifully written and deeply moving. It makes you appreciate the silent, quiet love in your life and reminds you what truly matters.',
-    rating: 5,
-  },
-  {
-    name: 'Aarush Nambiar',
-    text: 'Rarely does a book make me feel so much! Every page pulled me in deeper. Definitely one of my favourite reads this year. Absolutely stunning.',
-    rating: 5,
-  },
-  {
-    name: 'Saanvika Pillai',
-    text: 'This book beautifully highlights the importance of being there for your loved ones. It touched my heart in ways I didn\'t expect. Truly transformative.',
-    rating: 5,
-  },
-];
 
 const READER_MOMENTS = [
   { id: 1, type: 'image', src: '/reader-dm1.jpg', alt: 'Reader message' },
@@ -407,64 +375,387 @@ function ProfileModal({ isOpen, onClose, onOpenPolicy }) {
   );
 }
 
-// ===== SEARCH MODAL COMPONENT =====
-const SEARCHABLE_SECTIONS = [
-  { id: 'home', title: 'Home', keywords: ['home', 'start', 'book', 'you made me quiet', 'journey', 'emotion'] },
-  { id: 'about-book', title: 'About The Book', keywords: ['about', 'story', 'quiet', 'heartbreak', 'healing', 'synopsis', 'details', 'pages'] },
-  { id: 'author', title: 'The Author', keywords: ['author', 'vamshi', 'writer', 'about vamshi', 'biography', 'who is'] },
-  { id: 'reviews', title: 'Reviews', keywords: ['reviews', 'feedback', 'ratings', 'testimonials', 'readers', 'stars'] },
-  { id: 'shop', title: 'Shop', keywords: ['shop', 'buy', 'purchase', 'paperback', 'kindle', 'store', 'cart', 'order'] },
+// ===== GLOBAL SEARCH ENGINE COMPONENT =====
+const SEARCH_INDEX = [
+  {
+    id: 'product-author-edition',
+    type: 'product',
+    categoryGroup: 'books',
+    categoryLabel: 'Book Edition',
+    title: "You Made Me Quiet – Author's Signed Edition",
+    description: "Original author copy with free bookmark & handwritten personal letter from Vamshi. ₹299 (40% OFF)",
+    badge: "₹299 • Signed Copy",
+    keywords: ['signed', 'author edition', 'original', 'bookmark', 'letter', 'buy', 'shop', 'order', 'paperback', 'vamshi signed', 'discount', 'offer', 'special edition', 'price', '299', '499'],
+    actionType: 'navigate',
+    target: 'shop'
+  },
+  {
+    id: 'product-notion-press',
+    type: 'product',
+    categoryGroup: 'books',
+    categoryLabel: 'Book Edition',
+    title: "You Made Me Quiet – Official Notion Press Edition",
+    description: "Standard paperback printed & fulfilled directly via Notion Press official storefront. ₹249",
+    badge: "Notion Press",
+    keywords: ['notion press', 'standard', 'paperback', 'official', 'buy notion press', 'shop', 'order', '249'],
+    actionType: 'navigate',
+    target: 'shop'
+  },
+  {
+    id: 'product-amazon-kindle',
+    type: 'product',
+    categoryGroup: 'books',
+    categoryLabel: 'Book Edition',
+    title: "You Made Me Quiet – Amazon & Kindle Global Edition",
+    description: "Available globally across India and worldwide on Amazon Paperback & Kindle eBook.",
+    badge: "Amazon / Global",
+    keywords: ['amazon', 'kindle', 'ebook', 'international', 'global', 'worldwide', 'shop', 'buy', 'online store'],
+    actionType: 'navigate',
+    target: 'shop'
+  },
+  {
+    id: 'story-chapter-1',
+    type: 'story',
+    categoryGroup: 'story',
+    categoryLabel: 'Chapter 1 Excerpt',
+    title: "Read Chapter 1: The Boy Who Felt Empty",
+    description: "“He was not sad every day… but happiness had stopped visiting him regularly.” Read free online excerpt.",
+    badge: "Free Excerpt",
+    keywords: ['chapter 1', 'the boy who felt empty', 'read', 'story', 'excerpt', 'online read', 'sample', 'sample chapter', 'first chapter', 'read book', 'quotes', 'read full story'],
+    actionType: 'chapter1'
+  },
+  {
+    id: 'page-about-book',
+    type: 'story',
+    categoryGroup: 'story',
+    categoryLabel: 'Story & Narrative',
+    title: "About The Book – Love, Silence & Letting Go",
+    description: "Explore the themes of unspoken love, waiting for replies, silence, heartbreak, and emotional healing.",
+    badge: "Narrative",
+    keywords: ['about the book', 'about book', 'synopsis', 'story', 'silence', 'waiting', 'unspoken love', 'healing', 'letting go', 'plot', 'summary', 'expectations'],
+    actionType: 'navigate',
+    target: 'book'
+  },
+  {
+    id: 'page-about-author',
+    type: 'author',
+    categoryGroup: 'author',
+    categoryLabel: 'Author Bio',
+    title: "About Vamshi C A – Bestselling Author",
+    description: "Meet the author & storyteller behind You Made Me Quiet. Read his writing journey and milestones.",
+    badge: "Biography",
+    keywords: ['about the author', 'about author', 'vamshi', 'vamshi c a', 'writer', 'bio', 'biography', 'who is vamshi', 'milestones', 'bestseller', 'author story'],
+    actionType: 'navigate',
+    target: 'author-page'
+  },
+  {
+    id: 'page-invite-vamshi',
+    type: 'author',
+    categoryGroup: 'author',
+    categoryLabel: 'Speaking & Events',
+    title: "Invite Vamshi – Keynotes, College Fests & Podcasts",
+    description: "Invite author Vamshi for literary festivals, college fests, keynote sessions, book clubs, and podcasts.",
+    badge: "Speaker",
+    keywords: ['invite vamshi', 'invite', 'speaking', 'keynote', 'speaker', 'college fest', 'event', 'podcast', 'book club', 'guest speaker', 'invitation'],
+    actionType: 'navigate',
+    target: 'invite'
+  },
+  {
+    id: 'page-contact-support',
+    type: 'help',
+    categoryGroup: 'help',
+    categoryLabel: 'Support & Help',
+    title: "Contact Us & Direct Customer Support",
+    description: "Have questions about your order or want to share your review? Email: wordsofvamshi@gmail.com",
+    badge: "Support",
+    keywords: ['contact', 'help', 'support', 'email', 'instagram', 'customer care', 'reach out', 'wordsofvamshi@gmail.com', 'address', 'working days', 'phone', 'direct contact'],
+    actionType: 'navigate',
+    target: 'contact'
+  },
+  {
+    id: 'page-for-my-mother',
+    type: 'story',
+    categoryGroup: 'story',
+    categoryLabel: 'Special Dedication',
+    title: "For My Mother – A Letter of Gratitude",
+    description: "A heartfelt personal dedication letter written by author Vamshi to his mother.",
+    badge: "Dedication",
+    keywords: ['mother', 'for my mother', 'dedication', 'mom', 'letter', 'gratitude', 'tribute'],
+    actionType: 'mother'
+  },
+  {
+    id: 'policy-shipping-policy',
+    type: 'policy',
+    categoryGroup: 'help',
+    categoryLabel: 'Store Policy',
+    title: "Free Shipping Policy & Delivery Timelines",
+    description: "Free shipping across India. Orders processed and dispatched within 24 hours (3-5 days delivery).",
+    badge: "Free Delivery",
+    keywords: ['shipping', 'delivery', 'dispatch', 'courier', 'free delivery', 'tracking', 'order status', 'how long', 'timeline'],
+    actionType: 'policy',
+    policy: 'shipping'
+  },
+  {
+    id: 'policy-refund-policy',
+    type: 'policy',
+    categoryGroup: 'help',
+    categoryLabel: 'Store Policy',
+    title: "Refund & 7-Day Return Policy",
+    description: "7-day easy return policy for unused copies or replacement for damaged and defective orders.",
+    badge: "7-Day Return",
+    keywords: ['refund', 'return', 'exchange', 'damaged', 'cancellation', 'money back', 'replacement', 'defective'],
+    actionType: 'policy',
+    policy: 'refund'
+  },
+  {
+    id: 'policy-privacy-policy',
+    type: 'policy',
+    categoryGroup: 'help',
+    categoryLabel: 'Store Policy',
+    title: "Privacy Policy & Data Protection",
+    description: "Learn how your personal details, email, and payment transactions are protected securely.",
+    badge: "Security",
+    keywords: ['privacy', 'privacy policy', 'security', 'data', 'information', 'personal data'],
+    actionType: 'policy',
+    policy: 'privacy'
+  },
+  {
+    id: 'policy-terms-of-service',
+    type: 'policy',
+    categoryGroup: 'help',
+    categoryLabel: 'Store Policy',
+    title: "Terms of Service & Store Conditions",
+    description: "Official online store terms, conditions, copyright details, and usage guidelines.",
+    badge: "Terms",
+    keywords: ['terms', 'terms of service', 'conditions', 'legal', 'store rules'],
+    actionType: 'policy',
+    policy: 'terms'
+  }
 ];
 
-function SearchModal({ isOpen, onClose, onNavigate }) {
+const POPULAR_SEARCH_CHIPS = [
+  { label: "Signed Author Edition", query: "signed" },
+  { label: "Read Chapter 1", query: "chapter 1" },
+  { label: "About The Book", query: "about the book" },
+  { label: "Invite Vamshi", query: "invite" },
+  { label: "Contact Support", query: "contact" },
+  { label: "Free Shipping", query: "shipping" },
+  { label: "Return Policy", query: "refund" },
+];
+
+function SearchModal({ isOpen, onClose, onNavigate, onOpenChapter1, onOpenMotherPage, onOpenPolicy }) {
   const [query, setQuery] = useState('');
-  
+  const [activeCategory, setActiveCategory] = useState('all'); // 'all' | 'books' | 'story' | 'author' | 'help'
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const inputRef = useRef(null);
+
   useEffect(() => {
-    if (!isOpen) setQuery(''); // eslint-disable-line react-hooks/set-state-in-effect
+    if (isOpen) {
+      setQuery(''); // eslint-disable-line react-hooks/set-state-in-effect
+      setActiveCategory('all');
+      setSelectedIndex(0);
+      setTimeout(() => inputRef.current?.focus(), 50);
+    }
   }, [isOpen]);
+
+  const handleAction = useCallback((item) => {
+    onClose();
+    if (item.actionType === 'navigate') {
+      onNavigate(item.target);
+    } else if (item.actionType === 'chapter1') {
+      onOpenChapter1?.();
+    } else if (item.actionType === 'mother') {
+      onOpenMotherPage?.();
+    } else if (item.actionType === 'policy') {
+      onOpenPolicy?.(item.policy);
+    }
+  }, [onClose, onNavigate, onOpenChapter1, onOpenMotherPage, onOpenPolicy]);
 
   if (!isOpen) return null;
 
-  const results = query.trim() === '' 
-    ? [] 
-    : SEARCHABLE_SECTIONS.filter(s => 
-        s.title.toLowerCase().includes(query.toLowerCase()) || 
-        s.keywords.some(k => k.toLowerCase().includes(query.toLowerCase()))
-      );
+  const normalizedQuery = query.trim().toLowerCase();
+
+  const filteredResults = SEARCH_INDEX.filter(item => {
+    // Category filtering
+    if (activeCategory !== 'all' && item.categoryGroup !== activeCategory) {
+      return false;
+    }
+
+    if (normalizedQuery === '') {
+      return true;
+    }
+
+    const titleMatch = item.title.toLowerCase().includes(normalizedQuery);
+    const descMatch = item.description.toLowerCase().includes(normalizedQuery);
+    const badgeMatch = item.badge.toLowerCase().includes(normalizedQuery);
+    const keywordMatch = item.keywords.some(k => k.toLowerCase().includes(normalizedQuery));
+
+    return titleMatch || descMatch || badgeMatch || keywordMatch;
+  });
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Escape') {
+      onClose();
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setSelectedIndex(prev => (prev < filteredResults.length - 1 ? prev + 1 : 0));
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setSelectedIndex(prev => (prev > 0 ? prev - 1 : filteredResults.length - 1));
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (filteredResults.length > 0 && filteredResults[selectedIndex]) {
+        handleAction(filteredResults[selectedIndex]);
+      }
+    }
+  };
+
+  const getTagClass = (type) => {
+    if (type === 'product') return 'product';
+    if (type === 'story') return 'story';
+    if (type === 'author') return 'page';
+    if (type === 'policy') return 'policy';
+    return '';
+  };
+
+  const getCategoryIcon = (type) => {
+    if (type === 'product') return <ShoppingBag size={14} />;
+    if (type === 'story') return <BookOpen size={14} />;
+    if (type === 'author') return <Feather size={14} />;
+    if (type === 'help') return <Mail size={14} />;
+    if (type === 'policy') return <FileText size={14} />;
+    return <Search size={14} />;
+  };
 
   return (
     <div className="policy-overlay search-overlay" onClick={onClose}>
       <div className="search-modal" onClick={(e) => e.stopPropagation()}>
         <div className="search-content">
+          {/* Top Search Input Bar */}
           <div className="search-input-wrapper">
-            <Search className="search-icon-input" size={24} />
+            <Search className="search-icon-input" size={22} />
             <input 
+              ref={inputRef}
               type="text" 
               className="search-input" 
-              placeholder="Search sections, topics, or keywords..." 
+              placeholder="Search books, chapters, stories, author, policies, or help..." 
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              autoFocus
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setSelectedIndex(0);
+              }}
+              onKeyDown={handleKeyDown}
             />
+            {query && (
+              <button 
+                className="search-clear-btn" 
+                onClick={() => {
+                  setQuery('');
+                  setSelectedIndex(0);
+                  inputRef.current?.focus();
+                }}
+                aria-label="Clear search"
+              >
+                <X size={18} />
+              </button>
+            )}
+            <span className="search-kbd-esc">ESC</span>
             <button className="search-close-btn" onClick={onClose} aria-label="Close search">
               <X size={20} />
             </button>
           </div>
-          
-          <div className="search-results">
-            {query.trim() !== '' && results.length === 0 && (
-              <p className="no-results">No results found for "{query}". Try searching for "book", "author", or "buy".</p>
-            )}
-            {results.map(result => (
-              <div 
-                key={result.id} 
-                className="search-result-item"
-                onClick={() => { onClose(); onNavigate(result.id); }}
+
+          {/* Filter Tabs Bar */}
+          <div className="search-tabs-bar">
+            {[
+              { id: 'all', label: 'All Results' },
+              { id: 'books', label: 'Books & Editions' },
+              { id: 'story', label: 'Story & Chapters' },
+              { id: 'author', label: 'Author & Speaking' },
+              { id: 'help', label: 'Support & Policies' },
+            ].map(tab => (
+              <button
+                key={tab.id}
+                className={`search-tab-pill ${activeCategory === tab.id ? 'active' : ''}`}
+                onClick={() => {
+                  setActiveCategory(tab.id);
+                  setSelectedIndex(0);
+                }}
               >
-                <h3>{result.title}</h3>
-                <p>Navigate to {result.title} section</p>
-              </div>
+                {tab.label}
+              </button>
             ))}
+          </div>
+
+          {/* Empty Query: Popular Searches */}
+          {query.trim() === '' && activeCategory === 'all' && (
+            <div className="search-popular-wrapper">
+              <div className="search-popular-title">
+                <TrendingUp size={14} color="var(--accent, #eab308)" />
+                Popular Searches
+              </div>
+              <div className="search-popular-chips">
+                {POPULAR_SEARCH_CHIPS.map((chip, idx) => (
+                  <button
+                    key={idx}
+                    className="search-popular-chip"
+                    onClick={() => {
+                      setQuery(chip.query);
+                      setSelectedIndex(0);
+                    }}
+                  >
+                    <Search size={12} />
+                    {chip.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Results List */}
+          <div className="search-results">
+            {filteredResults.length === 0 ? (
+              <div className="no-results">
+                <p>No results found for <strong>"{query}"</strong>.</p>
+                <p style={{ fontSize: '0.85rem', marginTop: '0.5rem', color: '#9ca3af' }}>
+                  Try searching for <em>signed</em>, <em>chapter 1</em>, <em>vamshi</em>, <em>shipping</em>, or <em>support</em>.
+                </p>
+              </div>
+            ) : (
+              filteredResults.map((item, index) => (
+                <div 
+                  key={item.id} 
+                  className={`search-result-item ${selectedIndex === index ? 'selected' : ''}`}
+                  onMouseEnter={() => setSelectedIndex(index)}
+                  onClick={() => handleAction(item)}
+                >
+                  <div className="search-result-info">
+                    <div className="search-result-meta">
+                      <span className={`search-result-tag ${getTagClass(item.type)}`}>
+                        {getCategoryIcon(item.type)} {item.categoryLabel}
+                      </span>
+                      <span className="search-result-badge">{item.badge}</span>
+                    </div>
+                    <h3>{item.title}</h3>
+                    <p>{item.description}</p>
+                  </div>
+                  <div className="search-result-action">
+                    <span>{item.actionType === 'chapter1' ? 'Read' : item.actionType === 'policy' ? 'View' : 'Jump to'}</span>
+                    <ArrowRight size={16} />
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+
+          {/* Footer Hints */}
+          <div className="search-footer-hints">
+            <div className="search-hints-group">
+              <span><strong>↑ ↓</strong> to navigate</span>
+              <span><strong>↵</strong> to select</span>
+              <span><strong>esc</strong> to close</span>
+            </div>
+            <span>{filteredResults.length} {filteredResults.length === 1 ? 'result' : 'results'}</span>
           </div>
         </div>
       </div>
@@ -783,6 +1074,821 @@ function CheckoutModal({ isOpen, onClose, checkoutItems = [], updateQuantity }) 
   );
 }
 
+// ===== SHOP CATALOG VIEW (MATCHING SAGAR'S SHOP PAGE) =====
+function ShopCatalogView({ onAddToCart, onBuyNow }) {
+  const [openDropdown, setOpenDropdown] = useState(null); // 'availability' | 'price' | null
+  const [inStock, setInStock] = useState(false);
+  const [outOfStock, setOutOfStock] = useState(false);
+  const [priceFrom, setPriceFrom] = useState('');
+  const [priceTo, setPriceTo] = useState('');
+  const [sortBy, setSortBy] = useState('best-selling');
+  const dropdownRef = useRef(null);
+
+  const rawProducts = [
+    {
+      id: 'author-edition',
+      title: "You Made Me Quiet – Author's Signed Edition (Original Copy & Also Get free Bookmark and A Personal Letter from the Author)",
+      image: '/authors-edition.png',
+      discount: '-40% OFF',
+      originalPrice: '₹ 499.00',
+      price: '₹ 299.00',
+      numericPrice: 299,
+      inStock: true,
+      edition: 'author',
+      isDirectBuy: true,
+      buttonText: 'Buy Now',
+      createdDate: 1
+    },
+    {
+      id: 'paperback-edition',
+      title: 'You Made Me Quiet – Paperback Edition (Official Print by Notion Press)',
+      image: '/book-cover-quiet.png',
+      discount: '-33% OFF',
+      originalPrice: '₹ 499.00',
+      price: '₹ 335.00',
+      numericPrice: 335,
+      inStock: true,
+      edition: 'paperback',
+      isDirectBuy: false,
+      notionUrl: 'https://notionpress.com/in/read/you-made-me-quiet?utm_source=share_publish_email&utm_medium=whatsapp',
+      buttonText: 'Buy on Notion Press',
+      createdDate: 2
+    },
+    {
+      id: 'hardcover-edition',
+      title: "You Made Me Quiet – Collector's Hardcover Edition (Premium Hard Cover Finish)",
+      image: '/book-photo-1.jpg',
+      discount: '-43% OFF',
+      originalPrice: '₹ 899.00',
+      price: '₹ 510.00',
+      numericPrice: 510,
+      inStock: true,
+      edition: 'hardcover',
+      isDirectBuy: false,
+      notionUrl: 'https://notionpress.com/in/read/you-made-me-quiet?utm_source=share_publish_email&utm_medium=whatsapp',
+      buttonText: 'Buy Hardcover',
+      createdDate: 3
+    }
+  ];
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setOpenDropdown(null);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // Filter products
+  let filteredProducts = rawProducts.filter(p => {
+    if (inStock && !p.inStock) return false;
+    if (outOfStock && p.inStock) return false;
+    if (priceFrom && p.numericPrice < parseFloat(priceFrom)) return false;
+    if (priceTo && p.numericPrice > parseFloat(priceTo)) return false;
+    return true;
+  });
+
+  // Sort products
+  filteredProducts.sort((a, b) => {
+    switch (sortBy) {
+      case 'price-low':
+        return a.numericPrice - b.numericPrice;
+      case 'price-high':
+        return b.numericPrice - a.numericPrice;
+      case 'title-az':
+        return a.title.localeCompare(b.title);
+      case 'title-za':
+        return b.title.localeCompare(a.title);
+      case 'date-old':
+        return a.createdDate - b.createdDate;
+      case 'date-new':
+        return b.createdDate - a.createdDate;
+      case 'featured':
+      case 'most-relevant':
+      case 'best-selling':
+      default:
+        return 0;
+    }
+  });
+
+  const selectedAvailabilityCount = (inStock ? 1 : 0) + (outOfStock ? 1 : 0);
+
+  return (
+    <main className="shop-catalog-page">
+      <div className="container">
+        <h1 className="shop-catalog-title">All</h1>
+
+        <div className="shop-filter-bar" ref={dropdownRef}>
+          <div className="shop-filter-left">
+            <span className="shop-filter-label">Filter:</span>
+
+            {/* Availability Filter Dropdown */}
+            <div className="shop-filter-dropdown-wrap">
+              <button 
+                className={`shop-dropdown-pill ${openDropdown === 'availability' || selectedAvailabilityCount > 0 ? 'active' : ''}`}
+                type="button"
+                onClick={() => setOpenDropdown(prev => prev === 'availability' ? null : 'availability')}
+              >
+                Availability <ChevronDown size={14} />
+              </button>
+
+              {openDropdown === 'availability' && (
+                <div className="shop-filter-popover" onClick={(e) => e.stopPropagation()}>
+                  <div className="shop-popover-header">
+                    <span>{selectedAvailabilityCount} selected</span>
+                    <button 
+                      type="button" 
+                      className="shop-popover-reset"
+                      onClick={() => { setInStock(false); setOutOfStock(false); }}
+                    >
+                      Reset
+                    </button>
+                  </div>
+                  <div className="shop-popover-body">
+                    <label className="shop-checkbox-row">
+                      <input 
+                        type="checkbox" 
+                        className="shop-checkbox-input"
+                        checked={inStock}
+                        onChange={(e) => setInStock(e.target.checked)}
+                      />
+                      <span>In stock ({rawProducts.filter(p => p.inStock).length})</span>
+                    </label>
+                    <label className="shop-checkbox-row disabled">
+                      <input 
+                        type="checkbox" 
+                        className="shop-checkbox-input"
+                        checked={outOfStock}
+                        onChange={(e) => setOutOfStock(e.target.checked)}
+                        disabled
+                      />
+                      <span style={{ color: '#888' }}>Out of stock (0)</span>
+                    </label>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Price Filter Dropdown */}
+            <div className="shop-filter-dropdown-wrap">
+              <button 
+                className={`shop-dropdown-pill ${openDropdown === 'price' || priceFrom || priceTo ? 'active' : ''}`}
+                type="button"
+                onClick={() => setOpenDropdown(prev => prev === 'price' ? null : 'price')}
+              >
+                Price <ChevronDown size={14} />
+              </button>
+
+              {openDropdown === 'price' && (
+                <div className="shop-filter-popover" onClick={(e) => e.stopPropagation()}>
+                  <div className="shop-popover-header">
+                    <span>The highest price is ₹ 899.00</span>
+                    <button 
+                      type="button" 
+                      className="shop-popover-reset"
+                      onClick={() => { setPriceFrom(''); setPriceTo(''); }}
+                    >
+                      Reset
+                    </button>
+                  </div>
+                  <div className="shop-price-inputs-row">
+                    <div className="shop-price-input-group">
+                      <span className="shop-price-symbol">₹</span>
+                      <input 
+                        type="number" 
+                        placeholder="From"
+                        className="shop-price-input"
+                        value={priceFrom}
+                        onChange={(e) => setPriceFrom(e.target.value)}
+                      />
+                    </div>
+                    <div className="shop-price-input-group">
+                      <span className="shop-price-symbol">₹</span>
+                      <input 
+                        type="number" 
+                        placeholder="To"
+                        className="shop-price-input"
+                        value={priceTo}
+                        onChange={(e) => setPriceTo(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="shop-filter-right">
+            <div className="shop-sort-select-wrap">
+              <span className="shop-filter-label">Sort by:</span>
+              <select 
+                className="shop-sort-select" 
+                value={sortBy} 
+                onChange={(e) => setSortBy(e.target.value)}
+              >
+                <option value="featured">Featured</option>
+                <option value="most-relevant">Most relevant</option>
+                <option value="best-selling">Best selling</option>
+                <option value="title-az">Alphabetically, A-Z</option>
+                <option value="title-za">Alphabetically, Z-A</option>
+                <option value="price-low">Price, low to high</option>
+                <option value="price-high">Price, high to low</option>
+                <option value="date-old">Date, old to new</option>
+                <option value="date-new">Date, new to old</option>
+              </select>
+            </div>
+            <span className="shop-product-count">{filteredProducts.length} products</span>
+          </div>
+        </div>
+
+        <div className="shop-products-grid">
+          {filteredProducts.map((product) => (
+            <article key={product.id} className="shop-card">
+              <div className="shop-card-image-box">
+                <img src={product.image} alt={product.title} loading="lazy" />
+                <span className="shop-card-discount-badge">{product.discount}</span>
+              </div>
+              <div className="shop-card-info">
+                <h3 className="shop-card-title">{product.title}</h3>
+                <div className="shop-card-prices">
+                  <span className="shop-card-original-price">{product.originalPrice}</span>
+                  <span className="shop-card-current-price">{product.price}</span>
+                </div>
+                <div className="shop-card-actions">
+                  {product.isDirectBuy ? (
+                    <>
+                      <button 
+                        className="shop-card-btn-primary" 
+                        onClick={() => onBuyNow(product.edition)}
+                      >
+                        Buy Now
+                      </button>
+                      <button 
+                        className="shop-card-btn-secondary" 
+                        onClick={() => onAddToCart(product.edition)}
+                        title="Add to Cart"
+                      >
+                        <ShoppingCart size={18} />
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <a 
+                        href={product.notionUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="shop-card-btn-primary"
+                      >
+                        <ExternalLink size={15} />
+                        {product.buttonText}
+                      </a>
+                      <button 
+                        className="shop-card-btn-secondary" 
+                        onClick={() => onAddToCart('paperback')}
+                        title="Add to Cart"
+                      >
+                        <ShoppingCart size={18} />
+                      </button>
+                    </>
+                  )}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </main>
+  );
+}
+
+// ===== AUTHOR PAGE VIEW (MATCHING SAGAR'S EDITORIAL LAYOUT WITH VAMSHI CONTENT) =====
+function AuthorPageView({ onReadChapter, onGoToShop }) {
+  return (
+    <main className="author-page-view">
+      <div className="container">
+        {/* Centered Author Photo at the top */}
+        <div className="author-page-hero-img-box">
+          <img src="/vamshi-author.jpg" alt="Vamshi — Author of You Made Me Quiet" />
+        </div>
+
+        {/* Content matching user's real text and layout */}
+        <div className="author-page-body-container">
+          <h1 className="author-page-main-title">
+            Vamshi C A – Bestselling Author of <em>You Made Me Quiet</em>
+          </h1>
+          <h2 className="author-page-subtitle">
+            Vamshi C A – Author & Storyteller
+          </h2>
+
+          <p className="author-page-lead-italic">
+            Some stories are written to be read.<br />
+            Others are written because there are feelings that were never meant to stay unspoken.
+          </p>
+
+          <p className="author-page-paragraph">
+            I’m <VamshiName /> C A, author of <em>You Made Me Quiet</em> — an emotional journey about love, care, silence, waiting, and the things we carry when words are no longer enough.
+          </p>
+
+          <p className="author-page-paragraph">
+            <em>You Made Me Quiet</em> was born from emotions that many people experience but rarely express. It is a story of what happens when someone becomes a part of your world, leaves an unforgettable mark on your heart, and teaches you that not every feeling gets the ending we hope for.
+          </p>
+
+          <h3 className="author-page-section-heading">From Feelings to Pages</h3>
+
+          <p className="author-page-paragraph">
+            <em>You Made Me Quiet</em> is more than just a love story. It is a journey through:
+          </p>
+
+          <ul className="author-page-list">
+            <li className="author-page-list-item">
+              <strong>Unspoken Love:</strong> The feelings we carry even when we cannot say them.
+            </li>
+            <li className="author-page-list-item">
+              <strong>Waiting:</strong> The hope, uncertainty, and emotions that come with waiting for an answer.
+            </li>
+            <li className="author-page-list-item">
+              <strong>Care & Connection:</strong> How one person can become deeply meaningful in our lives.
+            </li>
+            <li className="author-page-list-item">
+              <strong>Silence:</strong> The things we say without words and the emotions hidden behind them.
+            </li>
+            <li className="author-page-list-item">
+              <strong>Healing:</strong> Learning to move forward while still respecting what once meant everything.
+            </li>
+          </ul>
+
+          <h3 className="author-page-section-heading">More Than a Love Story — A Community of Resilience</h3>
+
+          <p className="author-page-paragraph">
+            Today, <em>You Made Me Quiet</em> is a recognized Bestseller, building a community of readers who value resilience, deep care, and the power of genuine human connection.
+          </p>
+
+          <p className="author-page-paragraph">
+            A book only succeeds when a reader carries it in their heart. Thank you for being part of this journey.
+          </p>
+
+          <div className="author-page-actions">
+            <button 
+              className="author-page-read-link"
+              onClick={onReadChapter}
+            >
+              Read the Book &rarr;
+            </button>
+
+            <button 
+              className="author-page-cta-btn"
+              onClick={onGoToShop}
+            >
+              Click here to read full story
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+}
+
+// ===== ABOUT THE BOOK PAGE VIEW (MATCHING SAGAR'S EDITORIAL LAYOUT) =====
+function BookPageView({ onReadChapter, onGoToShop }) {
+  return (
+    <main className="author-page-view">
+      <div className="container">
+        {/* Centered Author Photo at the top */}
+        <div className="author-page-hero-img-box">
+          <img src="/vamshi-author.jpg" alt="Vamshi with You Made Me Quiet" />
+        </div>
+
+        <div className="author-page-body-container">
+          <h1 className="author-page-main-title">
+            About <em>You Made Me Quiet</em> – A Story of Love, Silence, Expectations &amp; Letting Go
+          </h1>
+
+          <p className="author-page-lead-italic">
+            Sometimes, we don't stop loving someone.<br />
+            We simply learn to stay silent about it.
+          </p>
+
+          <p className="author-page-paragraph">
+            <em>You Made Me Quiet</em> is a deeply emotional story about love that isn't always returned, conversations that remain unfinished, and the painful distance between two people who once meant everything to each other.
+          </p>
+
+          <h2 className="author-page-section-heading">About You Made Me Quiet</h2>
+
+          <p className="author-page-paragraph">
+            <em>You Made Me Quiet</em> is a story about the kind of love that asks for nothing but still hurts when it receives nothing.
+          </p>
+
+          <p className="author-page-paragraph">
+            It is about waiting for replies, waiting for calls, holding onto promises, and slowly realizing that sometimes you're the only one trying to keep a connection alive.
+          </p>
+
+          <p className="author-page-paragraph">
+            Through love, friendship, silence and heartbreak, the story explores what happens when you finally understand that loving someone doesn't always mean you have to keep holding on.
+          </p>
+
+          <h2 className="author-page-section-heading">Where It All Begins</h2>
+
+          <p className="author-page-paragraph">
+            It begins with a connection.<br />
+            A few conversations.<br />
+            A friendship that slowly becomes something more.<br />
+            And then, without realizing it, one person starts feeling much more than the other.
+          </p>
+
+          <h2 className="author-page-section-heading">A Love That Was Never Equal</h2>
+
+          <p className="author-page-paragraph">
+            There are moments when you keep asking yourself:<br />
+            “Why am I always waiting?”<br />
+            Why does one message mean so much to you while it means so little to them?<br />
+            Why do you keep making time for someone who can barely make time for you?<br />
+            And how long can you keep loving someone who keeps making you feel like an option?
+          </p>
+
+          <h2 className="author-page-section-heading">Why This Book?</h2>
+
+          <p className="author-page-paragraph">
+            This is not simply a love story. It is for anyone who has waited for a reply, stayed awake for a call, misunderstood silence, held onto hope, or loved someone a little more than they were loved back.
+          </p>
+
+          <p className="author-page-paragraph">
+            If you've ever had someone who made you feel everything—and then made you learn how to feel nothing—<strong>this book is for you.</strong>
+          </p>
+
+          <p className="author-page-lead-italic" style={{ marginTop: '2.5rem', textAlign: 'center', borderLeft: 'none', paddingLeft: 0 }}>
+            “Some stories aren't written with words.<br />
+            They are felt with the heart.”
+          </p>
+
+          <div className="author-page-actions">
+            <button 
+              className="author-page-read-link"
+              onClick={onGoToShop}
+            >
+              Get Your Copy Now &rarr;
+            </button>
+
+            <button 
+              className="author-page-cta-btn"
+              onClick={onReadChapter}
+            >
+              Click here to read full story
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+}
+
+// ===== CONTACT PAGE VIEW (MATCHING SAGAR REFERENCE WITH VAMSHI FOOTER INFO) =====
+function ContactPageView() {
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', comment: '' });
+  const [status, setStatus] = useState(''); // '' | 'sending' | 'success' | 'error'
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('sending');
+
+    const data = new FormData();
+    data.append("access_key", import.meta.env.VITE_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HERE");
+    data.append("subject", `New Reader Message from ${formData.name || 'Reader'} via Contact Page`);
+    data.append("from_name", "WordsOfVamshi Contact Page");
+    data.append("to_email", "wordsofvamshi@gmail.com");
+    data.append("Name", formData.name);
+    data.append("Email", formData.email);
+    data.append("Phone Number", formData.phone);
+    data.append("Message", formData.comment);
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: data
+      });
+      const result = await res.json();
+      if (result.success) {
+        setStatus('success');
+        setFormData({ name: '', email: '', phone: '', comment: '' });
+      } else {
+        // Direct fallback to mailto:wordsofvamshi@gmail.com
+        const subject = encodeURIComponent(`Message from ${formData.name || 'Reader'}`);
+        const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage:\n${formData.comment}`);
+        window.open(`mailto:wordsofvamshi@gmail.com?subject=${subject}&body=${body}`, '_blank');
+        setStatus('success');
+        setFormData({ name: '', email: '', phone: '', comment: '' });
+      }
+    } catch (err) {
+      console.error(err);
+      const subject = encodeURIComponent(`Message from ${formData.name || 'Reader'}`);
+      const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage:\n${formData.comment}`);
+      window.open(`mailto:wordsofvamshi@gmail.com?subject=${subject}&body=${body}`, '_blank');
+      setStatus('success');
+    }
+  };
+
+  return (
+    <main className="contact-page-view">
+      <div className="contact-page-container">
+        <h1 className="contact-page-title">Contact</h1>
+
+        <p className="contact-page-intro">
+          We’d love to hear from you. Whether you’ve read the book, are waiting for your order, or simply want to connect, your message is always welcome.
+        </p>
+
+        <h2 className="contact-section-title">How Can We Help?</h2>
+        <ul className="contact-page-list">
+          <li className="contact-page-list-item">Have questions about your order?</li>
+          <li className="contact-page-list-item">Want to share how the book impacted you?</li>
+          <li className="contact-page-list-item">Need support or want to reach out directly to the author’s team?</li>
+        </ul>
+        <p className="contact-page-intro" style={{ marginBottom: '2rem' }}>
+          We are here for you, just like the story promises.
+        </p>
+
+        <h2 className="contact-section-title">Direct Contact:</h2>
+        <div className="contact-info-block">
+          <p><strong>Email:</strong> <a href="mailto:wordsofvamshi@gmail.com">wordsofvamshi@gmail.com</a></p>
+          <p><strong>Instagram:</strong> <a href="https://www.instagram.com/wordsofvamshi?igsh=MXd4cGhxMWx0ZzQ1ZA%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer">@wordsofvamshi</a></p>
+        </div>
+
+        <h2 className="contact-section-title">Business Address:</h2>
+        <div className="contact-address-block">
+          <p><strong>WordsOfVamshi</strong></p>
+          <p>#2 Kallappa Layout, Teachers Colony, Vapasandra</p>
+          <p>Chickballapura, Karnataka - 562101, India</p>
+          <p style={{ marginTop: '0.5rem', color: '#666' }}><strong>Working Days:</strong> Monday – Sunday (10 AM to 8 PM)</p>
+        </div>
+
+        <h2 className="contact-section-title">Order & Delivery Support</h2>
+        <p className="contact-page-intro">
+          Please note: Due to overwhelming demand, shipping may take a little longer than usual. We are working hard to deliver your order as soon as possible. Thank you for your patience and understanding.
+        </p>
+
+        <h2 className="contact-section-title">Your Story Matters</h2>
+        <p className="contact-page-intro" style={{ marginBottom: '1.5rem' }}>
+          If you’ve finished reading <em>You Made Me Quiet</em>, we would love to hear your thoughts. Your experience can help guide other readers on their journey.
+        </p>
+
+        {status === 'success' && (
+          <div className="contact-status-banner success">
+            <CheckCircle size={20} />
+            <span>Thank you for reaching out! Your message has been sent directly to Vamshi.</span>
+          </div>
+        )}
+
+        <form className="contact-form-wrapper" onSubmit={handleSubmit}>
+          <div className="contact-form-grid-2">
+            <input 
+              type="text"
+              className="contact-input"
+              placeholder="Name"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            />
+            <input 
+              type="email"
+              required
+              className="contact-input"
+              placeholder="Email *"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            />
+          </div>
+
+          <div className="contact-form-group">
+            <input 
+              type="tel"
+              className="contact-input"
+              placeholder="Phone number"
+              value={formData.phone}
+              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+            />
+          </div>
+
+          <div className="contact-form-group">
+            <textarea 
+              required
+              className="contact-textarea"
+              placeholder="Comment"
+              value={formData.comment}
+              onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
+            />
+          </div>
+
+          <button 
+            type="submit" 
+            className="contact-submit-btn"
+            disabled={status === 'sending'}
+          >
+            {status === 'sending' ? (
+              <>
+                <Send size={16} className="animate-spin" />
+                Sending...
+              </>
+            ) : 'Send'}
+          </button>
+        </form>
+      </div>
+    </main>
+  );
+}
+
+// ===== INVITE VAMSHI PAGE VIEW (MATCHING SAGAR'S EDITORIAL INVITE PAGE) =====
+function InvitePageView() {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    organization: '',
+    date: '',
+    message: ''
+  });
+  const [status, setStatus] = useState(''); // '' | 'sending' | 'success' | 'error'
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('sending');
+
+    const fullName = `${formData.firstName} ${formData.lastName}`.trim();
+    const data = new FormData();
+    data.append("access_key", import.meta.env.VITE_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HERE");
+    data.append("subject", `New Speaking / Event Invitation from ${fullName || 'Guest'} (${formData.organization || 'Organization'})`);
+    data.append("from_name", "WordsOfVamshi Invite Form");
+    data.append("to_email", "wordsofvamshi@gmail.com");
+    data.append("First Name", formData.firstName);
+    data.append("Last Name", formData.lastName);
+    data.append("Email", formData.email);
+    data.append("Phone Number", formData.phone);
+    data.append("Organization", formData.organization);
+    data.append("Tentative Date", formData.date);
+    data.append("Message", formData.message);
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: data
+      });
+      const result = await res.json();
+      if (result.success) {
+        setStatus('success');
+        setFormData({ firstName: '', lastName: '', email: '', phone: '', organization: '', date: '', message: '' });
+      } else {
+        const subject = encodeURIComponent(`Speaking Invitation from ${fullName} - ${formData.organization}`);
+        const body = encodeURIComponent(
+          `Name: ${fullName}\n` +
+          `Organization: ${formData.organization}\n` +
+          `Email: ${formData.email}\n` +
+          `Phone: ${formData.phone}\n` +
+          `Tentative Date: ${formData.date}\n\n` +
+          `Message:\n${formData.message}`
+        );
+        window.open(`mailto:wordsofvamshi@gmail.com?subject=${subject}&body=${body}`, '_blank');
+        setStatus('success');
+        setFormData({ firstName: '', lastName: '', email: '', phone: '', organization: '', date: '', message: '' });
+      }
+    } catch (err) {
+      console.error(err);
+      const subject = encodeURIComponent(`Speaking Invitation from ${fullName} - ${formData.organization}`);
+      const body = encodeURIComponent(
+        `Name: ${fullName}\n` +
+        `Organization: ${formData.organization}\n` +
+        `Email: ${formData.email}\n` +
+        `Phone: ${formData.phone}\n` +
+        `Tentative Date: ${formData.date}\n\n` +
+        `Message:\n${formData.message}`
+      );
+      window.open(`mailto:wordsofvamshi@gmail.com?subject=${subject}&body=${body}`, '_blank');
+      setStatus('success');
+    }
+  };
+
+  return (
+    <main className="invite-page-view">
+      <div className="invite-page-container">
+        <h1 className="invite-page-title">Let’s share a story together.</h1>
+
+        <p className="invite-page-intro">
+          I believe in the power of shared stories. I love speaking to different groups about connection and the journey of writing. From the themes of my book, <em>You Made Me Quiet</em>, to the lessons learned through writing and storytelling, I am here to inspire your audience.
+        </p>
+
+        <p className="invite-page-note">
+          Please fill out the form below to get started. I usually plan my schedule 4-6 weeks in advance to give every event my full focus.
+        </p>
+
+        {status === 'success' && (
+          <div className="contact-status-banner success" style={{ maxWidth: '740px', margin: '0 auto 2rem' }}>
+            <CheckCircle size={20} />
+            <span>Thank you! Your invitation request has been sent directly to Vamshi.</span>
+          </div>
+        )}
+
+        <div className="invite-card-form">
+          <form onSubmit={handleSubmit}>
+            <div className="invite-form-grid-2">
+              <div className="invite-form-group" style={{ marginBottom: 0 }}>
+                <label className="invite-label">First Name *</label>
+                <input 
+                  type="text"
+                  required
+                  className="invite-input"
+                  placeholder="Your first name"
+                  value={formData.firstName}
+                  onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                />
+              </div>
+
+              <div className="invite-form-group" style={{ marginBottom: 0 }}>
+                <label className="invite-label">Last Name *</label>
+                <input 
+                  type="text"
+                  required
+                  className="invite-input"
+                  placeholder="Your last name"
+                  value={formData.lastName}
+                  onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                />
+              </div>
+            </div>
+
+            <div className="invite-form-group">
+              <label className="invite-label">Email *</label>
+              <input 
+                type="email"
+                required
+                className="invite-input"
+                placeholder="your@email.com"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              />
+            </div>
+
+            <div className="invite-form-group">
+              <label className="invite-label">Phone Number</label>
+              <input 
+                type="tel"
+                className="invite-input"
+                placeholder="+91 98765 43210"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              />
+            </div>
+
+            <div className="invite-form-group">
+              <label className="invite-label">Your Organization (School, College, or Company) *</label>
+              <input 
+                type="text"
+                required
+                className="invite-input"
+                placeholder="Name of your organization"
+                value={formData.organization}
+                onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
+              />
+            </div>
+
+            <div className="invite-form-group">
+              <label className="invite-label">Tentative Date</label>
+              <input 
+                type="text"
+                className="invite-input"
+                placeholder="DD/MM/YYYY"
+                value={formData.date}
+                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+              />
+            </div>
+
+            <div className="invite-form-group">
+              <label className="invite-label">Any additional details or message for me?</label>
+              <textarea 
+                className="invite-textarea"
+                placeholder="Share any specific topics, audience details, or questions you have..."
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+              />
+            </div>
+
+            <button 
+              type="submit" 
+              className="invite-submit-btn"
+              disabled={status === 'sending'}
+            >
+              {status === 'sending' ? (
+                <>
+                  <Send size={16} className="animate-spin" />
+                  Sending Request...
+                </>
+              ) : 'Send Request'}
+            </button>
+          </form>
+        </div>
+      </div>
+    </main>
+  );
+}
+
 function App() {
   const { isSignedIn } = useAuth();
   const clerk = useClerk();
@@ -796,6 +1902,7 @@ function App() {
   };
 
   const [scrolled, setScrolled] = useState(false);
+  const [currentPage, setCurrentPage] = useState('home'); // 'home' | 'shop' | 'author' | 'book' | 'contact' | 'invite'
   const [activeSection, setActiveSection] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [policyModal, setPolicyModal] = useState(null);
@@ -812,9 +1919,6 @@ function App() {
   const [readingChapter1, setReadingChapter1] = useState(false);
   const [motherPageOpen, setMotherPageOpen] = useState(false);
   const [maximizedMedia, setMaximizedMedia] = useState(null);
-  const [reviewForm, setReviewForm] = useState({ name: '', email: '', phone: '', rating: 5, review: '' });
-  const [reviewSubmitStatus, setReviewSubmitStatus] = useState(''); // '' | 'sending' | 'success' | 'error'
-  const [reviewFormError, setReviewFormError] = useState('');
   const [heroImageIndex, setHeroImageIndex] = useState(0);
   const lastHeartTime = useRef(0);
   const heartId = useRef(0);
@@ -1021,9 +2125,51 @@ function App() {
     }]);
   }, []);
 
-  const navigateTo = (sectionId) => {
+  const navigateTo = (target) => {
     setMobileMenuOpen(false);
-    const el = document.getElementById(sectionId);
+    if (target === 'shop') {
+      setCurrentPage('shop');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    if (target === 'author-page' || target === 'author-bio' || target === 'about-author') {
+      setCurrentPage('author');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    if (target === 'book' || target === 'about-book' || target === 'book-page') {
+      setCurrentPage('book');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    if (target === 'contact' || target === 'contact-page') {
+      setCurrentPage('contact');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    if (target === 'invite' || target === 'invite-vamshi' || target === 'invite-page') {
+      setCurrentPage('invite');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    if (target === 'home') {
+      setCurrentPage('home');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    if (currentPage !== 'home') {
+      setCurrentPage('home');
+      setTimeout(() => {
+        const el = document.getElementById(target);
+        if (el) {
+          const offset = window.innerWidth <= 768 ? 108 : 72;
+          const y = el.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }, 50);
+      return;
+    }
+    const el = document.getElementById(target);
     if (el) {
       const offset = window.innerWidth <= 768 ? 108 : 72;
       const y = el.getBoundingClientRect().top + window.scrollY - offset;
@@ -1064,77 +2210,9 @@ function App() {
     }, 5000);
   };
 
-  const handleReviewSubmit = async (e) => {
-    e.preventDefault();
-    setReviewFormError('');
 
-    const trimmedName = reviewForm.name.trim();
-    const trimmedEmail = reviewForm.email.trim();
-    const trimmedPhone = reviewForm.phone.trim();
-    const trimmedReview = reviewForm.review.trim();
 
-    if (!trimmedName || trimmedName.length < 2) {
-      setReviewFormError('Please enter your full name.');
-      return;
-    }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!trimmedEmail || !emailRegex.test(trimmedEmail)) {
-      setReviewFormError('Please enter a valid email address (e.g. name@domain.com).');
-      return;
-    }
-
-    const phoneDigits = trimmedPhone.replace(/\D/g, '');
-    const phoneRegex = /^[+\d\s\-()]{7,15}$/;
-    if (!trimmedPhone || !phoneRegex.test(trimmedPhone) || phoneDigits.length < 7 || phoneDigits.length > 15) {
-      setReviewFormError('Please enter a valid phone number (at least 7 to 15 digits).');
-      return;
-    }
-
-    if (!trimmedReview || trimmedReview.length < 3) {
-      setReviewFormError('Please write your review before submitting.');
-      return;
-    }
-
-    if (!reviewForm.rating || reviewForm.rating < 1 || reviewForm.rating > 5) {
-      setReviewFormError('Please select a rating between 1 and 5 stars.');
-      return;
-    }
-
-    setReviewSubmitStatus('sending');
-
-    const formData = new FormData();
-    formData.append("access_key", import.meta.env.VITE_WEB3FORMS_KEY);
-    formData.append("subject", `New Reader Review from ${trimmedName}! (${reviewForm.rating}/5 Stars)`);
-    formData.append("from_name", "WordsOfVamshi Reviews");
-    formData.append("Name", trimmedName);
-    formData.append("Email", trimmedEmail);
-    formData.append("Phone Number", trimmedPhone);
-    formData.append("Rating", `${'★'.repeat(reviewForm.rating)}${'☆'.repeat(5 - reviewForm.rating)} (${reviewForm.rating}/5 Stars)`);
-    formData.append("Review", trimmedReview);
-
-    try {
-      const res = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: formData
-      });
-      const data = await res.json();
-
-      if (data.success) {
-        setReviewSubmitStatus('success');
-        setReviewForm({ name: '', email: '', phone: '', rating: 5, review: '' });
-      } else {
-        setReviewSubmitStatus('error');
-      }
-    } catch (err) {
-      console.error(err);
-      setReviewSubmitStatus('error');
-    }
-
-    setTimeout(() => {
-      setReviewSubmitStatus('');
-    }, 6000);
-  };
 
   if (motherPageOpen) {
     return (
@@ -1394,19 +2472,21 @@ function App() {
           </div>
 
           <div className={`nav-links ${mobileMenuOpen ? 'mobile-open' : ''}`}>
-            <button className={`nav-link ${activeSection === 'home' ? 'active' : ''}`} onClick={() => navigateTo('home')}>Home</button>
-            <button className={`nav-link ${activeSection === 'about-book' ? 'active' : ''}`} onClick={() => navigateTo('about-book')}>About The Book</button>
-            <button className={`nav-link ${activeSection === 'author' ? 'active' : ''}`} onClick={() => navigateTo('author')}>The Author</button>
-            <button className={`nav-link ${activeSection === 'reviews' ? 'active' : ''}`} onClick={() => navigateTo('reviews')}>Reviews</button>
-            <button className={`nav-link ${motherPageOpen ? 'active' : ''}`} onClick={() => setMotherPageOpen(true)} style={{ textTransform: 'uppercase' }}>For My Mother</button>
+            <button className={`nav-link ${currentPage === 'home' && activeSection === 'home' ? 'active' : ''}`} onClick={() => navigateTo('home')}>Home</button>
+            <button className={`nav-link ${currentPage === 'shop' ? 'active' : ''}`} onClick={() => navigateTo('shop')}>Shop</button>
+            <button className={`nav-link ${currentPage === 'author' ? 'active' : ''}`} onClick={() => navigateTo('author-page')}>About The Author</button>
+            <button className={`nav-link ${currentPage === 'book' ? 'active' : ''}`} onClick={() => navigateTo('book')}>About The Book</button>
+            <button className={`nav-link ${currentPage === 'contact' ? 'active' : ''}`} onClick={() => navigateTo('contact')}>Contact</button>
+            <button className={`nav-link ${currentPage === 'invite' ? 'active' : ''}`} onClick={() => navigateTo('invite')}>Invite Vamshi</button>
+            <button className={`nav-link ${motherPageOpen ? 'active' : ''}`} onClick={() => setMotherPageOpen(true)}>For My Mother</button>
           </div>
 
           <div className="nav-icons">
-            <button className="icon-btn" aria-label="Search" onClick={() => setSearchOpen(true)}><Search size={22} strokeWidth={2.5} /></button>
+            <button className="icon-btn" aria-label="Search" onClick={() => setSearchOpen(true)}><Search size={20} strokeWidth={2.5} /></button>
             <SignedOut>
               <SignInButton mode="modal">
                 <button className="icon-btn" aria-label="Account">
-                  <User size={22} strokeWidth={2.5} />
+                  <User size={20} strokeWidth={2.5} />
                 </button>
               </SignInButton>
             </SignedOut>
@@ -1415,7 +2495,7 @@ function App() {
                 <UserButton />
               </div>
             </SignedIn>
-            <button className="icon-btn" aria-label="Cart" onClick={() => setCartOpen(true)}><ShoppingBag size={22} strokeWidth={2.5} /></button>
+            <button className="icon-btn" aria-label="Cart" onClick={() => setCartOpen(true)}><ShoppingBag size={20} strokeWidth={2.5} /></button>
           </div>
 
           <div className="mobile-toggle" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
@@ -1424,8 +2504,11 @@ function App() {
         </div>
       </nav>
 
-      {/* ===== HERO ===== */}
-      <section id="home" className="page-section hero" onMouseMove={handleHeroMouseMove}>
+      {/* Page Content: Home vs Shop */}
+      {currentPage === 'home' ? (
+        <>
+          {/* ===== HERO ===== */}
+          <section id="home" className="page-section hero" onMouseMove={handleHeroMouseMove}>
         <div className="hero-bg-image"></div>
         <div className="container hero-grid">
           <div className="hero-left">
@@ -1455,7 +2538,7 @@ function App() {
                 <ShoppingCart size={18} />
                 Buy Now
               </button>
-              <button className="btn-secondary" onClick={() => navigateTo('about-book')}>
+              <button className="btn-secondary" onClick={() => setReadingChapter1(true)}>
                 <BookOpen size={18} />
                 Read Chapter 1
               </button>
@@ -1548,57 +2631,26 @@ function App() {
         </div>
       </section>
 
-      {/* ===== ABOUT THE BOOK ===== */}
-      <section id="about-book" className="page-section about-book">
-        <div className="about-book-wrapper">
-          <div className="container about-grid" style={{ minHeight: 'auto', paddingBottom: '0' }}>
-          <div className="about-left">
-            <div className="section-tag">✦ Inside the Pages</div>
-            <h2>The Words That<br /><em>Stay With You</em></h2>
-            <p>
-              "You Made Me Quiet" is a poetic exploration of the silence we hold inside when words fail us. It is not just about love lost — it is about love remembered, love that heals, and love that lives on quietly.
-            </p>
-
-            <div className="quote-block">
-              "Some stories aren't written with words… they are felt with the heart."
-            </div>
-
-            <p>
-              Dedicated to the one who became his silence, <VamshiName /> has crafted a deeply personal collection that speaks to anyone who has ever loved in silence — and grown from it.
-            </p>
+      {/* ===== AUTHOR ===== */}
+      <section id="author" className="page-section author-section-v2">
+        <div className="container author-v2-grid">
+          <div className="author-v2-img-wrapper">
+            <img src="/vamshi-author.jpg" alt="Vamshi — Author of You Made Me Quiet" />
+            <div className="author-v2-label">THE AUTHOR</div>
           </div>
-
-          <div className="about-right">
-            <div className="theme-card">
-              <div className="theme-card-icon"><Heart size={22} /></div>
-              <h3>Silent Love</h3>
-              <p>"I never chose you for a moment — I chose you for a lifetime."</p>
-            </div>
-            <div className="theme-card">
-              <div className="theme-card-icon"><Moon size={22} /></div>
-              <h3>Unfinished Souls</h3>
-              <p>"You are the unfinished part of my soul, a quiet echo that still calls your name."</p>
-            </div>
-            <div className="theme-card">
-              <div className="theme-card-icon"><Sparkles size={22} /></div>
-              <h3>Healing</h3>
-              <p>"Even in your lowest phase, your story is not over. You still have the power to rise."</p>
-            </div>
-            <div className="theme-card">
-              <div className="theme-card-icon"><Feather size={22} /></div>
-              <h3>Growth</h3>
-              <p>"Time doesn't erase love… it just teaches you how to live with it."</p>
-            </div>
-          </div>
-        </div>
-
-          <div className="container chapter-1-cta-wrapper" style={{ textAlign: 'center' }}>
-            <p style={{ fontFamily: 'var(--font-heading)', fontStyle: 'italic', fontSize: '1.5rem', marginBottom: '1.5rem', color: 'var(--text-primary)', letterSpacing: '0.5px' }}>
-              A dream that went global 📚 Released in 150+ countries
+          <div className="author-v2-content">
+            <div className="author-v2-name-watermark">VAMSHI</div>
+            <h2 className="author-v2-name">VAMSHI</h2>
+            <p className="author-v2-bio">
+              <VamshiName /> isn't just an author; he's a storyteller who captures the raw, unfiltered emotions of a generation.
             </p>
-            <button className="btn-primary chapter-1-cta" onClick={() => setReadingChapter1(true)}>
-              <BookOpen size={20} />
-              Click here to read Chapter 1
+            <div className="author-v2-tags">
+              <span className="author-v2-tag">POET</span>
+              <span className="author-v2-tag">ROMANCE WRITER</span>
+              <span className="author-v2-tag">DREAMER</span>
+            </div>
+            <button className="author-v2-bio-btn" onClick={() => navigateTo('author-page')}>
+              READ FULL BIO
             </button>
           </div>
         </div>
@@ -1625,437 +2677,35 @@ function App() {
         <div className="container collective-footer">
           <h2>Join the Readers Who Already Relived Their Memories</h2>
           <p>Discover why Vamshi's heartfelt story is winning hearts across India. Start your journey through love, healing, and resilience today.</p>
-          <button className="btn-primary" onClick={() => navigateTo('shop')}>
+          <button
+            onClick={() => navigateTo('shop')}
+            className="btn-primary"
+          >
             Get Your Copy Now
           </button>
         </div>
       </section>
-
-
-      {/* ===== REVIEWS ===== */}
-      <section id="reviews" className="page-section reviews-section">
-        <div className="container reviews-inner">
-          <div className="section-header">
-            <div className="section-tag">★ Reader Reviews</div>
-            <h2>What Readers Are Saying</h2>
-            <p>Words from the hearts that felt every page</p>
-          </div>
-
-          <div className="reviews-grid">
-            {REVIEWS.slice(0, 6).map((review, i) => (
-              <div key={i} className="review-card">
-                <Quote className="review-quote-icon" size={32} />
-                <div className="review-stars">
-                  {[...Array(review.rating)].map((_, j) => (
-                    <Star key={j} size={16} fill="currentColor" />
-                  ))}
-                </div>
-                <p className="review-text">"{review.text}"</p>
-                <div className="review-author">
-                  <div className="review-avatar">{review.name.charAt(0)}</div>
-                  <div>
-                    <div className="review-name">{review.name}</div>
-                    <div className="review-label">Verified Reader</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* ===== SUBMIT YOUR REVIEW ===== */}
-          <div className="review-submit-section fade-in-up">
-            <div className="review-submit-layout">
-              {/* Left Side: Info & Headline */}
-              <div className="review-submit-left">
-                <div className="review-submit-icon-wrapper">
-                  <Pen size={28} />
-                </div>
-                <h3>Share Your Experience</h3>
-                <p className="review-submit-desc">
-                  Have you read <em>You Made Me Quiet</em>? We would love to hear your thoughts, emotions, and personal reflections. Your review means the world to Vamshi and helps fellow readers discover this journey of words.
-                </p>
-                
-                <div className="review-submit-highlights">
-                  <div className="review-highlight-item">
-                    <CheckCircle size={18} className="review-highlight-icon" />
-                    <span>Delivered directly to the author</span>
-                  </div>
-                  <div className="review-highlight-item">
-                    <CheckCircle size={18} className="review-highlight-icon" />
-                    <span>100% genuine reader community & reviews</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Side: Form */}
-              <div className="review-submit-right">
-                {reviewSubmitStatus === 'success' ? (
-                  <div className="review-success-msg">
-                    <div className="review-success-icon">🎉</div>
-                    <h4>Thank You For Sharing!</h4>
-                    <p>Your review and details have been sent directly to Vamshi. We deeply appreciate your beautiful words and support!</p>
-                    <button 
-                      type="button"
-                      className="btn-secondary review-reset-btn" 
-                      onClick={() => setReviewSubmitStatus('')}
-                    >
-                      Write Another Review
-                    </button>
-                  </div>
-                ) : (
-                  <form className="review-submit-form" onSubmit={handleReviewSubmit} noValidate>
-                    <div className="review-form-group">
-                      <label htmlFor="review-name">Name *</label>
-                      <input
-                        id="review-name"
-                        name="name"
-                        type="text"
-                        placeholder="Enter your full name"
-                        value={reviewForm.name}
-                        onChange={(e) => {
-                          setReviewForm({ ...reviewForm, name: e.target.value });
-                          if (reviewFormError) setReviewFormError('');
-                        }}
-                        required
-                        minLength={2}
-                        autoComplete="name"
-                      />
-                    </div>
-
-                    <div className="review-form-row">
-                      <div className="review-form-group">
-                        <label htmlFor="review-email">Email *</label>
-                        <input
-                          id="review-email"
-                          name="email"
-                          type="email"
-                          placeholder="your.email@example.com"
-                          value={reviewForm.email}
-                          onChange={(e) => {
-                            setReviewForm({ ...reviewForm, email: e.target.value });
-                            if (reviewFormError) setReviewFormError('');
-                          }}
-                          required
-                          autoComplete="email"
-                        />
-                      </div>
-                      <div className="review-form-group">
-                        <label htmlFor="review-phone">Phone No. *</label>
-                        <input
-                          id="review-phone"
-                          name="phone"
-                          type="tel"
-                          placeholder="Enter your phone number"
-                          value={reviewForm.phone}
-                          onChange={(e) => {
-                            setReviewForm({ ...reviewForm, phone: e.target.value });
-                            if (reviewFormError) setReviewFormError('');
-                          }}
-                          required
-                          autoComplete="tel"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="review-form-group">
-                      <label>Your Rating *</label>
-                      <div className="review-star-selector">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                          <button
-                            key={star}
-                            type="button"
-                            className={`review-star-btn ${star <= reviewForm.rating ? 'active' : ''}`}
-                            onClick={() => {
-                              setReviewForm({ ...reviewForm, rating: star });
-                              if (reviewFormError) setReviewFormError('');
-                            }}
-                            aria-label={`Rate ${star} out of 5 stars`}
-                          >
-                            <Star size={26} fill={star <= reviewForm.rating ? 'currentColor' : 'none'} />
-                          </button>
-                        ))}
-                        <span className="review-star-label">{reviewForm.rating} / 5 Stars</span>
-                      </div>
-                    </div>
-
-                    <div className="review-form-group">
-                      <label htmlFor="review-text">Your Review *</label>
-                      <textarea
-                        id="review-text"
-                        name="review"
-                        placeholder="What did you feel while reading? Which part touched your heart the most?"
-                        rows={4}
-                        value={reviewForm.review}
-                        onChange={(e) => {
-                          setReviewForm({ ...reviewForm, review: e.target.value });
-                          if (reviewFormError) setReviewFormError('');
-                        }}
-                        required
-                        minLength={3}
-                      />
-                    </div>
-
-                    {reviewFormError && (
-                      <div className="review-error-box">
-                        ⚠️ {reviewFormError}
-                      </div>
-                    )}
-
-                    <button
-                      type="submit"
-                      className="btn-primary review-submit-btn"
-                      disabled={reviewSubmitStatus === 'sending'}
-                    >
-                      {reviewSubmitStatus === 'sending' ? (
-                        <>Submitting...</>
-                      ) : (
-                        <>
-                          <Send size={18} />
-                          Submit Review
-                        </>
-                      )}
-                    </button>
-
-                    {reviewSubmitStatus === 'error' && (
-                      <p className="review-error-msg">Something went wrong while sending your review. Please try again!</p>
-                    )}
-                  </form>
-                )}
-              </div>
-            </div>
-          </div>
-
-          <div className="reviews-message-card fade-in-up">
-            <Heart size={32} className="reviews-message-icon" />
-            <p className="reviews-message-text">
-              If these pages stayed with you in some quiet way,<br />
-              I’d truly love to hear your thoughts.<br />
-              Share your feelings, reflections, or even a single line that touched you—<br />
-              it means more than you know.
-            </p>
-            <a href="https://www.instagram.com/wordsofvamshi?igsh=MXd4cGhxMWx0ZzQ1ZA%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" className="reviews-instagram-link">
-              Connect with me on Instagram: @WORDSOFVAMSHI
-            </a>
-            <p className="reviews-message-footer">
-              Your words might become a part of my next story.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== AUTHOR ===== */}
-      <section id="author" className="page-section author-section">
-        <div className="container author-grid">
-          <div className="author-img-wrapper">
-            <img src="/author.png" alt="Vamshi" />
-          </div>
-          <div className="author-content">
-            <div className="section-tag">✦ About The Author</div>
-            <h2>Meet The Author</h2>
-            <p>
-              <VamshiName /> is a passionate writer who expresses emotions through simple yet powerful words. His writing reflects real feelings of love, care, silence, and personal growth — capturing moments that many feel but few can describe.
-            </p>
-            <p>
-              He believes that some stories are not meant to be spoken loudly, but to be felt deeply. Through this book, he shares a journey of emotions shaped by memories, connections, and lessons that leave a lasting impact.
-            </p>
-            <p>
-              Blending heartfelt thoughts with raw honesty, <VamshiName /> writes not just to tell a story — but to make readers feel every word.
-            </p>
-            <div className="quote-block" style={{ marginTop: '2rem' }}>
-              "This is not just a story…<br />it is a feeling you carry with you."
-            </div>
-            <div className="author-signature">
-              <BrandLogo variant="signature" withQuill withSwash />
-            </div>
-
-            {/* Author Achievements */}
-            <div className="author-achievements" style={{ marginTop: '2.5rem', paddingTop: '2rem', borderTop: '1px solid var(--border-light)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
-                <Trophy size={24} color="var(--accent)" />
-                <h3 style={{ fontSize: '1.5rem', margin: 0, fontFamily: 'var(--font-heading)' }}>Milestones</h3>
-              </div>
-              <div className="achievements-grid" style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
-                {[
-                  { src: '/rocket-badge.jpg', title: 'Rocket Launch', desc: 'Sold over 100 copies in 3 Days' },
-                  { src: '/author-club-badge.png', title: '500+ Author Club', desc: 'Sold over 500 copies in 7 Days' },
-                  { src: '/badge-1000.png', title: '1000+ Author Club', desc: 'Just in 08 days' },
-                  { src: '/badge-1500.png', title: '1500+ Author Club', desc: 'Just in 11 days' },
-                  { src: '/badge-2000.png', title: '2000+ Author Club', desc: 'Just in 13 days' },
-                  { src: '/badge-2500.png', title: '2500+ Author Club', desc: 'Just in 15 days' },
-                  { src: '/badge-3000.png', title: '3000+ Author Club', desc: 'Just in 18 days' },
-                  { src: '/badge-3500.png', title: '3500+ Author Club', desc: 'Just in 21 days' },
-                  { src: '/badge-4000.png', title: '4000+ Author Club', desc: 'Just in 24 days' },
-                ].map((badge, idx) => (
-                  <div key={idx} className="achievement-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', width: '150px' }}>
-                    <img 
-                      src={badge.src} 
-                      alt={`${badge.title}`} 
-                      style={{ 
-                        width: '110px', 
-                        height: '110px', 
-                        borderRadius: '50%', 
-                        objectFit: 'cover', 
-                        boxShadow: '0 8px 24px rgba(0,0,0,0.12)', 
-                        marginBottom: '1rem', 
-                        border: '4px solid var(--bg-cream)' 
-                      }} 
-                    />
-                    <span style={{ fontSize: '0.9rem', fontWeight: '700', color: 'var(--text-primary)', marginBottom: '0.25rem' }}>{badge.title}</span>
-                    <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{badge.desc}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== SHOP ===== */}
-      <section id="shop" className="page-section shop-section">
-        <div className="container shop-inner">
-          <div className="section-header">
-            <div className="section-tag">📚 Now Available</div>
-            <h2>Get Your Copy</h2>
-            <p>Now available on Notion Press — India's leading self-publishing platform</p>
-          </div>
-
-          {/* Notion Press Buy Section */}
-          <div className="notion-press-section">
-            <div className="notion-press-header">
-              <div className="notion-press-badge">
-                <span className="notion-press-live-dot"></span>
-                Available Now
-              </div>
-              <h3>Buy from Notion Press</h3>
-              <p>Order your copy and get it delivered to your doorstep</p>
-            </div>
-
-            <div className="notion-press-options">
-              {/* Paperback */}
-              <div className="notion-press-card">
-                <div className="notion-press-card-type">Paperback</div>
-                <div className="notion-press-card-desc">Paper Cover Edition</div>
-                <div className="notion-press-card-price">
-                  <span style={{ color: 'var(--text-light)', textDecoration: 'line-through', fontSize: '1.5rem', fontWeight: 600 }}>
-                    ₹499
-                  </span>
-                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.15rem' }}>
-                    <span className="price-symbol">₹</span>
-                    <span className="price-amount">335</span>
-                  </div>
-                  <div style={{ background: '#ff0000', color: '#fff', fontSize: '0.8rem', fontWeight: 800, padding: '0.2rem 0.5rem', marginLeft: '0.25rem', display: 'flex', alignItems: 'center' }}>
-                    -15% OFF
-                  </div>
-                </div>
-                <div style={{ background: '#fff9e6', border: '1px dashed #eab308', color: '#854d0e', padding: '0.5rem', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 600, marginBottom: '1.5rem', width: '100%' }}>
-                  Use Coupon JAM273 <br/>
-                  <span style={{ fontSize: '0.75rem', fontWeight: 400 }}>(Applicable only in Notion Press)</span>
-                </div>
-                <ul className="notion-press-card-features">
-                  <li><Check size={14} /> Soft paper cover</li>
-                  <li><Check size={14} /> Lightweight & portable</li>
-                  <li><Check size={14} /> Standard quality print</li>
-                </ul>
-                <a
-                  href="https://notionpress.com/in/read/you-made-me-quiet?utm_source=share_publish_email&utm_medium=whatsapp"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-primary notion-press-buy-btn"
-                >
-                  <ExternalLink size={16} />
-                  Buy Paperback
-                </a>
-              </div>
-
-              {/* Hardcover */}
-              <div className="notion-press-card notion-press-card-featured">
-                <div className="notion-press-popular-tag">RECOMMENDED</div>
-                <div className="notion-press-card-type">Hardcover</div>
-                <div className="notion-press-card-desc">Premium Hard Cover Edition</div>
-                <div className="notion-press-card-price">
-                  <span style={{ color: 'var(--text-light)', textDecoration: 'line-through', fontSize: '1.5rem', fontWeight: 600 }}>
-                    ₹899
-                  </span>
-                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.15rem' }}>
-                    <span className="price-symbol">₹</span>
-                    <span className="price-amount">510</span>
-                  </div>
-                </div>
-                <ul className="notion-press-card-features">
-                  <li><Check size={14} /> Durable hardcover binding</li>
-                  <li><Check size={14} /> Premium feel & finish</li>
-                  <li><Check size={14} /> Perfect for gifting & collecting</li>
-                </ul>
-                <a
-                  href="https://notionpress.com/in/read/you-made-me-quiet?utm_source=share_publish_email&utm_medium=whatsapp"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-primary notion-press-buy-btn"
-                >
-                  <ExternalLink size={16} />
-                  Buy Hardcover
-                </a>
-              </div>
-            </div>
-
-            <p className="notion-press-note">
-              You will be redirected to Notion Press to complete your purchase securely.
-            </p>
-          </div>
-
-          {/* Divider between Notion Press and Editions */}
-          <div className="shop-divider">
-            <span>or grab your author edition below</span>
-          </div>
-
-          <div className="section-header" style={{ marginBottom: '2rem' }}>
-            <div className="section-tag">✦ Limited Editions</div>
-            <h2>Grab Your Author Edition</h2>
-          </div>
-
-          <div className="shop-editions-grid">
-            {/* Author's Edition */}
-            <div className="edition-card">
-              <div className="edition-img-wrapper author-img">
-                <img src="/authors-edition.png" alt="You Made Me Quiet - Author's Edition" />
-                <div className="edition-badge">LIMITED</div>
-              </div>
-              <div className="edition-content">
-                <h2>Author's Edition</h2>
-                <div className="shop-author-name">By <VamshiName /></div>
-                
-                <div className="shop-release-date" style={{ background: 'var(--accent-light)', padding: '1rem', borderRadius: '8px', border: '1px solid var(--accent)' }}>
-                  <div style={{ marginBottom: '0.25rem', fontSize: '1.1rem', fontWeight: 'bold', color: 'var(--accent-dark)' }}>Available Now</div>
-                  <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Book sent and packed by author with love 🖤</div>
-                </div>
-
-                <div className="shop-message">
-                  <p className="edition-highlight">Only 100 copies will ever exist.</p>
-                  <p>Not for everyone. Only for the readers who truly feel the silence behind <em>You Made Me Quiet</em>. The <em>Author's Edition</em> will include:</p>
-                  <ul className="edition-features">
-                    <li>Personally Signed Book</li>
-                    <li>Exclusive Author Card</li>
-                    <li>"A Letter From …" Surprise Gift</li>
-                  </ul>
-                  <p className="edition-note">Made for the readers who truly connect with the silence behind the story.</p>
-                </div>
-
-                <div className="edition-buy-actions">
-                  <button className="btn-secondary edition-action-btn" onClick={() => handleAuthGatedAction(() => handleAddToCart('author'))}>
-                    <ShoppingCart size={18} />
-                    Add to Cart
-                  </button>
-                  <button className="btn-primary buy-now-btn edition-action-btn" onClick={() => handleAuthGatedAction(() => handleBuyNow('author'))}>
-                    Buy Now
-                  </button>
-                </div>
-              </div>
-            </div>
-
-
-          </div>
-        </div>
-      </section>
+        </>
+      ) : currentPage === 'shop' ? (
+        <ShopCatalogView
+          onAddToCart={(edition) => handleAuthGatedAction(() => handleAddToCart(edition))}
+          onBuyNow={(edition) => handleAuthGatedAction(() => handleBuyNow(edition))}
+        />
+      ) : currentPage === 'author' ? (
+        <AuthorPageView
+          onReadChapter={() => setReadingChapter1(true)}
+          onGoToShop={() => navigateTo('shop')}
+        />
+      ) : currentPage === 'book' ? (
+        <BookPageView
+          onReadChapter={() => setReadingChapter1(true)}
+          onGoToShop={() => navigateTo('shop')}
+        />
+      ) : currentPage === 'contact' ? (
+        <ContactPageView />
+      ) : (
+        <InvitePageView />
+      )}
 
       {/* ===== FOOTER ===== */}
       <footer className="footer">
@@ -2080,11 +2730,12 @@ function App() {
               <h4>Navigate</h4>
               <ul>
                 <li><a href="#" onClick={(e) => { e.preventDefault(); navigateTo('home'); }}>Home</a></li>
-                <li><a href="#" onClick={(e) => { e.preventDefault(); navigateTo('about-book'); }}>About The Book</a></li>
-                <li><a href="#" onClick={(e) => { e.preventDefault(); navigateTo('author'); }}>The Author</a></li>
-                <li><a href="#" onClick={(e) => { e.preventDefault(); navigateTo('reviews'); }}>Reviews</a></li>
-                <li><a href="#" onClick={(e) => { e.preventDefault(); setMotherPageOpen(true); }}>For My Mother</a></li>
                 <li><a href="#" onClick={(e) => { e.preventDefault(); navigateTo('shop'); }}>Shop</a></li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); navigateTo('author-page'); }}>About The Author</a></li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); navigateTo('book'); }}>About The Book</a></li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); navigateTo('contact'); }}>Contact</a></li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); navigateTo('invite'); }}>Invite Vamshi</a></li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); setMotherPageOpen(true); }}>For My Mother</a></li>
               </ul>
             </div>
 
@@ -2158,13 +2809,22 @@ function App() {
       />
 
       {/* Search Modal */}
-      <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} onNavigate={navigateTo} />
+      <SearchModal 
+        isOpen={searchOpen} 
+        onClose={() => setSearchOpen(false)} 
+        onNavigate={navigateTo}
+        onOpenChapter1={() => setReadingChapter1(true)}
+        onOpenMotherPage={() => setMotherPageOpen(true)}
+        onOpenPolicy={(policy) => setPolicyModal(policy)}
+      />
 
       {/* Profile Modal */}
       <ProfileModal isOpen={profileOpen} onClose={() => setProfileOpen(false)} onOpenPolicy={setPolicyModal} />
 
       {/* Maximize Modal */}
       <MaximizeModal moment={maximizedMedia} onClose={() => setMaximizedMedia(null)} />
+
+
 
       {/* Checkout Modal */}
       <CheckoutModal 
