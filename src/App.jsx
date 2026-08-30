@@ -6,8 +6,6 @@ import './index.css';
 
 const HEART_EMOJIS = ['❤️', '🧡', '💛', '💕', '💖', '💗', '🤍', '♥️'];
 
-const SECTIONS = ['home', 'author', 'reviews', 'shop'];
-
 // Clean "Vamshi" text
 const VamshiName = ({ className = '' }) => (
   <span className={`vamshi-name ${className}`}>Vamshi</span>
@@ -1903,7 +1901,6 @@ function App() {
 
   const [scrolled, setScrolled] = useState(false);
   const [currentPage, setCurrentPage] = useState('home'); // 'home' | 'shop' | 'author' | 'book' | 'contact' | 'invite'
-  const [activeSection, setActiveSection] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [policyModal, setPolicyModal] = useState(null);
   const [cartOpen, setCartOpen] = useState(false);
@@ -1945,18 +1942,6 @@ function App() {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
-
-      // Detect active section
-      for (const id of SECTIONS) {
-        const el = document.getElementById(id);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= 120 && rect.bottom > 120) {
-            setActiveSection(id);
-            break;
-          }
-        }
-      }
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -2467,20 +2452,64 @@ function App() {
       {/* Navbar */}
       <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
         <div className="container nav-inner">
-          <div className="nav-logo" onClick={() => navigateTo('home')} style={{ cursor: 'pointer' }}>
+          {/* Mobile Toggle on Far Left */}
+          <div className="mobile-toggle" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle navigation menu">
+            {mobileMenuOpen ? <X size={26} strokeWidth={2.2} /> : <Menu size={26} strokeWidth={2.2} />}
+          </div>
+
+          {/* Centered Brand Signature Logo */}
+          <div className="nav-logo" onClick={() => { navigateTo('home'); setMobileMenuOpen(false); }} style={{ cursor: 'pointer' }}>
             <BrandLogo variant="navbar" withQuill />
           </div>
 
+          {/* Navigation Links & Mobile Drawer */}
           <div className={`nav-links ${mobileMenuOpen ? 'mobile-open' : ''}`}>
-            <button className={`nav-link ${currentPage === 'home' && activeSection === 'home' ? 'active' : ''}`} onClick={() => navigateTo('home')}>Home</button>
-            <button className={`nav-link ${currentPage === 'shop' ? 'active' : ''}`} onClick={() => navigateTo('shop')}>Shop</button>
-            <button className={`nav-link ${currentPage === 'author' ? 'active' : ''}`} onClick={() => navigateTo('author-page')}>About The Author</button>
-            <button className={`nav-link ${currentPage === 'book' ? 'active' : ''}`} onClick={() => navigateTo('book')}>About The Book</button>
-            <button className={`nav-link ${currentPage === 'contact' ? 'active' : ''}`} onClick={() => navigateTo('contact')}>Contact</button>
-            <button className={`nav-link ${currentPage === 'invite' ? 'active' : ''}`} onClick={() => navigateTo('invite')}>Invite Vamshi</button>
-            <button className={`nav-link ${motherPageOpen ? 'active' : ''}`} onClick={() => setMotherPageOpen(true)}>For My Mother</button>
+            <button className={`nav-link ${currentPage === 'home' && !motherPageOpen ? 'active' : ''}`} onClick={() => { navigateTo('home'); setMobileMenuOpen(false); }}>Home</button>
+            <button className={`nav-link ${currentPage === 'shop' && !motherPageOpen ? 'active' : ''}`} onClick={() => { navigateTo('shop'); setMobileMenuOpen(false); }}>Shop</button>
+            <button className={`nav-link ${currentPage === 'author' && !motherPageOpen ? 'active' : ''}`} onClick={() => { navigateTo('author-page'); setMobileMenuOpen(false); }}>About The Author</button>
+            <button className={`nav-link ${currentPage === 'book' && !motherPageOpen ? 'active' : ''}`} onClick={() => { navigateTo('book'); setMobileMenuOpen(false); }}>About The Book</button>
+            <button className={`nav-link ${currentPage === 'contact' && !motherPageOpen ? 'active' : ''}`} onClick={() => { navigateTo('contact'); setMobileMenuOpen(false); }}>Contact</button>
+            <button className={`nav-link ${currentPage === 'invite' && !motherPageOpen ? 'active' : ''}`} onClick={() => { navigateTo('invite'); setMobileMenuOpen(false); }}>Invite Vamshi</button>
+            <button className="nav-link" onClick={() => { setPolicyModal('shipping'); setMobileMenuOpen(false); }}>Track Your Order</button>
+            <button className={`nav-link ${motherPageOpen ? 'active' : ''}`} onClick={() => { setMotherPageOpen(true); setMobileMenuOpen(false); }}>For My Mother</button>
+
+            {/* Mobile Drawer Bottom Section (Log in + Vamshi's Gmail + Socials) */}
+            <div className="mobile-drawer-footer">
+              <div className="mobile-drawer-auth">
+                <SignedOut>
+                  <SignInButton mode="modal">
+                    <button className="mobile-drawer-login-btn" onClick={() => setMobileMenuOpen(false)}>
+                      <User size={18} strokeWidth={2.2} />
+                      <span>Log in</span>
+                    </button>
+                  </SignInButton>
+                </SignedOut>
+                <SignedIn>
+                  <div className="mobile-drawer-logged-in">
+                    <UserButton showName />
+                  </div>
+                </SignedIn>
+              </div>
+
+              <div className="mobile-drawer-email-row">
+                <a href="mailto:wordsofvamshi@gmail.com" className="mobile-drawer-email-link">
+                  <Mail size={16} />
+                  <span>wordsofvamshi@gmail.com</span>
+                </a>
+              </div>
+
+              <div className="mobile-drawer-socials">
+                <a href="https://instagram.com/wordsofvamshi" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="mobile-drawer-social-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                </a>
+                <a href="mailto:wordsofvamshi@gmail.com" aria-label="Email" className="mobile-drawer-social-icon">
+                  <Mail size={20} strokeWidth={2} />
+                </a>
+              </div>
+            </div>
           </div>
 
+          {/* Action Icons on Far Right */}
           <div className="nav-icons">
             <button className="icon-btn" aria-label="Search" onClick={() => setSearchOpen(true)}><Search size={20} strokeWidth={2.5} /></button>
             <SignedOut>
@@ -2491,15 +2520,11 @@ function App() {
               </SignInButton>
             </SignedOut>
             <SignedIn>
-              <div className="clerk-user-wrapper" style={{ display: 'flex', alignItems: 'center', marginLeft: '0.5rem' }}>
+              <div className="clerk-user-wrapper" style={{ display: 'flex', alignItems: 'center', marginLeft: '0.25rem' }}>
                 <UserButton />
               </div>
             </SignedIn>
             <button className="icon-btn" aria-label="Cart" onClick={() => setCartOpen(true)}><ShoppingBag size={20} strokeWidth={2.5} /></button>
-          </div>
-
-          <div className="mobile-toggle" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </div>
         </div>
       </nav>
