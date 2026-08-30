@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { ShoppingCart, Star, Heart, BookOpen, Quote, Sparkles, Moon, Feather, Check, Pen, Menu, X, Search, User, ShoppingBag, Package, MapPin, ExternalLink, VolumeX, Volume2, Send, CheckCircle, Trophy } from 'lucide-react';
 import { SignedIn, SignedOut, SignInButton, UserButton, useAuth, useClerk } from '@clerk/clerk-react';
+import BrandLogo from './BrandLogo.jsx';
 import './index.css';
 
 const HEART_EMOJIS = ['❤️', '🧡', '💛', '💕', '💖', '💗', '🤍', '♥️'];
@@ -364,8 +365,7 @@ function ProfileModal({ isOpen, onClose, onOpenPolicy }) {
           
           <div className="profile-content">
             <div className="profile-logo">
-              <span className="profile-logo-icon"><Pen size={20} /></span>
-              WordsOfVamshi
+              <BrandLogo variant="profile" withQuill />
             </div>
             
             <h1 className="profile-title">Sign in</h1>
@@ -1390,8 +1390,7 @@ function App() {
       <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
         <div className="container nav-inner">
           <div className="nav-logo" onClick={() => navigateTo('home')} style={{ cursor: 'pointer' }}>
-            <div className="nav-logo-icon"><Pen size={16} /></div>
-            WordsOfVamshi
+            <BrandLogo variant="navbar" withQuill />
           </div>
 
           <div className={`nav-links ${mobileMenuOpen ? 'mobile-open' : ''}`}>
@@ -1824,7 +1823,9 @@ function App() {
             <div className="quote-block" style={{ marginTop: '2rem' }}>
               "This is not just a story…<br />it is a feeling you carry with you."
             </div>
-            <div className="author-signature">~ <VamshiName /></div>
+            <div className="author-signature">
+              <BrandLogo variant="signature" withQuill withSwash />
+            </div>
 
             {/* Author Achievements */}
             <div className="author-achievements" style={{ marginTop: '2.5rem', paddingTop: '2rem', borderTop: '1px solid var(--border-light)' }}>
@@ -2021,7 +2022,7 @@ function App() {
           <div className="footer-grid">
             {/* Brand Column */}
             <div className="footer-brand">
-              <h3>WordsOf<VamshiName /></h3>
+              <BrandLogo variant="footer" withQuill withSwash />
               <p>Exploring love, care, and human emotions through simple yet powerful words. Join our community of passionate readers.</p>
               <div className="footer-socials">
                 <a href="https://www.instagram.com/wordsofvamshi?igsh=MXd4cGhxMWx0ZzQ1ZA%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
