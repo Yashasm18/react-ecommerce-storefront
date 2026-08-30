@@ -1509,6 +1509,45 @@ function App() {
         Your genuine purchase helps keep stories alive and supports independent writing.
       </div>
 
+      {/* ===== OFFICIAL SPOTLIGHT ===== */}
+      <section className="page-section spotlight-section">
+        <div className="container spotlight-grid">
+          <div className="spotlight-left">
+            <div className="spotlight-book-wrapper">
+              <img src="/book-cover-quiet.png" alt="You Made Me Quiet — Book Cover" className="spotlight-book-img" />
+              <div className="spotlight-bestseller-seal">
+                <span>BEST</span>
+                <span>SELLER</span>
+              </div>
+            </div>
+          </div>
+          <div className="spotlight-right">
+            <div className="spotlight-tag">🏆 Official Spotlight</div>
+            <h2 className="spotlight-title">
+              THE STORY THAT<br />REACHED 53K<br />HEARTS.
+            </h2>
+            <div className="spotlight-stats">
+              <div className="spotlight-stat">
+                <div className="spotlight-stat-number">53,000+</div>
+                <div className="spotlight-stat-label">COPIES SOLD</div>
+              </div>
+              <div className="spotlight-stat-divider"></div>
+              <div className="spotlight-stat">
+                <div className="spotlight-stat-number">#1</div>
+                <div className="spotlight-stat-label">INDEPENDENT HIT</div>
+              </div>
+            </div>
+            <p className="spotlight-desc">
+              Experience the raw, emotional journey of quiet love and healing. <strong>"You Made Me Quiet"</strong> has crossed the 53,000+ copy milestone — making it one of India's most beloved independent books of 2026.
+            </p>
+            <button className="btn-primary" onClick={() => navigateTo('shop')}>
+              <ShoppingCart size={18} />
+              Get Your Copy
+            </button>
+          </div>
+        </div>
+      </section>
+
       {/* ===== ABOUT THE BOOK ===== */}
       <section id="about-book" className="page-section about-book">
         <div className="about-book-wrapper">
