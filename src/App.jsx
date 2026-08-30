@@ -1351,7 +1351,7 @@ function App() {
           <span className="ticker-item">✦</span>
           <span className="ticker-item">Paperback ₹335 · Hardcover ₹510</span>
           <span className="ticker-item">✦</span>
-          <span className="ticker-item">Written for the hearts that feel deeply but love silently.</span>
+          <span className="ticker-item">Every copy includes a Chikkaballapur-themed bookmark + personal letter from Vamshi.</span>
           <span className="ticker-item">✦</span>
           <span className="ticker-item">🏆 Top #1 Notion Press Bestseller • 2026</span>
           <span className="ticker-item">✦</span>
@@ -1363,7 +1363,7 @@ function App() {
           <span className="ticker-item">✦</span>
           <span className="ticker-item">Paperback ₹335 · Hardcover ₹510</span>
           <span className="ticker-item">✦</span>
-          <span className="ticker-item">Written for the hearts that feel deeply but love silently.</span>
+          <span className="ticker-item">Every copy includes a Chikkaballapur-themed bookmark + personal letter from Vamshi.</span>
           <span className="ticker-item">✦</span>
         </div>
       </div>
