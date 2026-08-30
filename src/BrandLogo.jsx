@@ -1,5 +1,3 @@
-import React from 'react';
-
 /**
  * WordsOfVamshi Signature Brand Logo
  * 
@@ -12,7 +10,6 @@ export default function BrandLogo({
   variant = 'navbar', // 'navbar' | 'footer' | 'signature' | 'hero' | 'profile'
   withSwash = true,   // show signature flourish underline
   withQuill = true,   // show feather quill pen
-  text = 'Words of Vamshi',
   onClick,
   className = '',
   style = {},
