@@ -1453,11 +1453,11 @@ function App() {
             <div className="hero-actions fade-in-up delay-3">
               <button className="btn-primary" onClick={() => navigateTo('shop')}>
                 <ShoppingCart size={18} />
-                Buy Paperback
+                Buy Now
               </button>
               <button className="btn-secondary" onClick={() => navigateTo('about-book')}>
                 <BookOpen size={18} />
-                Read Excerpt
+                Read Chapter 1
               </button>
             </div>
 
