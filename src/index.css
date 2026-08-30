@@ -5825,3 +5825,127 @@ img.moment-media {
     padding: 1.5rem 1.25rem;
   }
 }
+
+/* ==========================================================================
+   UNIVERSAL MULTI-DEVICE RESPONSIVE ENGINE (MOBILE, TABLET, DESKTOP & TV)
+   ========================================================================== */
+
+/* 1. Global Viewport & Safe-Area Safeguards */
+html, body {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: max(1.25rem, env(safe-area-inset-left));
+  padding-right: max(1.25rem, env(safe-area-inset-right));
+}
+
+/* 2. Mobile Inputs: Prevent iOS Auto-Zoom */
+@media (max-width: 768px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="password"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  .nav-links.mobile-open {
+    padding-top: max(4.5rem, calc(3.5rem + env(safe-area-inset-top)));
+    padding-bottom: max(2rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* 3. Small Mobile Devices (iPhone SE, Galaxy S, 320px – 400px) */
+@media (max-width: 400px) {
+  .nav-brand {
+    font-size: 1.15rem;
+  }
+  .header-actions {
+    gap: 0.5rem;
+  }
+  .author-page-main-title,
+  .contact-page-title,
+  .invite-page-title {
+    font-size: 1.65rem;
+  }
+  .author-page-actions {
+    width: 100%;
+  }
+  .author-page-cta-btn,
+  .contact-submit-btn,
+  .invite-submit-btn {
+    width: 100%;
+    text-align: center;
+  }
+  .shop-card-actions {
+    flex-direction: column;
+  }
+  .shop-card-btn,
+  .shop-card-btn-secondary {
+    width: 100%;
+  }
+}
+
+/* 4. Tablets & Medium Screens (768px – 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .shop-products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+  .author-page-hero-img-box {
+    max-width: 480px;
+  }
+  .invite-card-form {
+    padding: 2rem;
+  }
+}
+
+/* 5. Standard Laptops & Desktops (1024px – 1600px) */
+@media (min-width: 1025px) and (max-width: 1600px) {
+  .container {
+    max-width: 1200px;
+  }
+}
+
+/* 6. Ultra-Wide Monitors & Smart TVs (1600px – 3840px+) */
+@media (min-width: 1601px) {
+  .container {
+    max-width: 1360px;
+  }
+  .author-page-body-container,
+  .contact-page-container,
+  .invite-page-container {
+    max-width: 840px;
+  }
+  .author-page-paragraph,
+  .contact-page-intro,
+  .invite-page-intro {
+    font-size: 1.12rem;
+    line-height: 1.9;
+  }
+  .search-modal {
+    max-width: 760px;
+  }
+}
+
+/* 7. Touch Device Optimization */
+@media (hover: none) and (pointer: coarse) {
+  .nav-link,
+  .shop-card-btn,
+  .author-page-cta-btn,
+  .invite-submit-btn,
+  .search-popular-chip {
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+}
