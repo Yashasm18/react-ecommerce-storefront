@@ -3692,7 +3692,7 @@ img.moment-media {
     align-items: center;
   }
 
-  .hero-subtitle { margin: 0 auto 2.5rem; max-width: 100%; }
+  .hero-subtitle { margin: 0 auto 0.5rem; max-width: 100%; }
   .hero-actions, .hero-stats { justify-content: center; }
 
   .hero-title { font-size: 3.2rem; }
@@ -3717,10 +3717,9 @@ img.moment-media {
 
 @media (max-width: 1024px) {
   .nav-inner {
-    display: grid !important;
-    grid-template-columns: 44px 1fr auto !important;
+    display: flex !important;
     align-items: center !important;
-    justify-content: stretch !important;
+    justify-content: space-between !important;
     position: relative !important;
     padding-left: 0.75rem !important;
     padding-right: 0.75rem !important;
@@ -3732,7 +3731,6 @@ img.moment-media {
   .nav-cta { display: none; }
   
   .mobile-toggle { 
-    grid-column: 1 !important;
     display: flex !important; 
     align-items: center !important;
     justify-content: flex-start !important;
@@ -3741,21 +3739,23 @@ img.moment-media {
     cursor: pointer !important;
     padding: 0.35rem 0 !important;
     margin: 0 !important;
-    width: 44px !important;
-    height: 44px !important;
+    width: 40px !important;
+    height: 40px !important;
+    flex-shrink: 0 !important;
     z-index: 1002 !important;
   }
   
   .nav-logo { 
-    grid-column: 2 !important;
-    order: 2 !important;
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    margin: 0 auto !important;
+    margin: 0 !important;
     text-align: center !important;
-    position: static !important;
-    transform: none !important;
+    order: 2 !important;
     z-index: 1001 !important;
     font-size: 1.15rem; 
     gap: 0.35rem; 
@@ -3764,13 +3764,13 @@ img.moment-media {
   .nav-logo-icon { width: 26px; height: 26px; font-size: 0.85rem; }
   
   .nav-icons { 
-    grid-column: 3 !important;
-    order: 3 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: flex-end !important;
     gap: 0.85rem !important; 
     margin-left: auto !important;
+    order: 3 !important;
+    flex-shrink: 0 !important;
     z-index: 1002 !important;
   }
 
@@ -3902,24 +3902,27 @@ img.moment-media {
   .hero-title { font-size: 2.2rem; }
   
   .hero-subtitle-card {
-    padding: 0.9rem 1.2rem;
-    border-radius: 12px;
-    max-width: 100%;
-    margin-bottom: 1.15rem;
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    padding: 0.75rem 1rem !important;
+    border-radius: 10px !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 auto 1rem !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    height: auto !important;
   }
 
   .hero-subtitle { 
-    font-size: 0.92rem; 
-    line-height: 1.55;
-    padding: 0;
-    color: #222222;
-    text-align: left;
-    text-wrap: balance;
-    max-width: 100%;
+    font-size: 0.9rem !important; 
+    line-height: 1.5 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    color: #222222 !important;
+    text-align: center !important;
+    text-wrap: balance !important;
+    max-width: 100% !important;
   }
 
   .hero-subtitle-platform {
