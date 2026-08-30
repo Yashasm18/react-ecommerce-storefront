@@ -548,22 +548,23 @@ a.nav-link {
 
 /* Subtitle in semi-transparent card */
 .hero-subtitle-card {
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  padding: 1.25rem 1.75rem;
-  border-radius: 8px;
+  padding: 1.15rem 1.5rem;
+  border-radius: 12px;
   margin-bottom: 1.5rem;
   max-width: 520px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
 .hero-subtitle {
-  font-size: 1.05rem;
-  color: #333333;
+  font-size: 1.02rem;
+  color: #2b2b2b;
   max-width: 480px;
-  line-height: 1.75;
+  line-height: 1.65;
   margin-bottom: 0;
+  text-wrap: balance;
 }
 
 .hero-subtitle-platform {
@@ -3890,7 +3891,34 @@ img.moment-media {
   }
 
   .hero-title { font-size: 2.2rem; }
-  .hero-subtitle { font-size: 1rem; padding: 0 0.5rem; }
+  
+  .hero-subtitle-card {
+    padding: 0.9rem 1.2rem;
+    border-radius: 12px;
+    max-width: 100%;
+    margin-bottom: 1.15rem;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .hero-subtitle { 
+    font-size: 0.92rem; 
+    line-height: 1.55;
+    padding: 0;
+    color: #222222;
+    text-align: left;
+    text-wrap: balance;
+    max-width: 100%;
+  }
+
+  .hero-subtitle-platform {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+  }
+
   .hero-actions { flex-wrap: wrap; gap: 0.75rem; }
   .hero-stats { flex-direction: column; gap: 1rem; align-items: center; }
   .hero-stats .stat-item { text-align: center; }
