@@ -5025,14 +5025,14 @@ img.moment-media {
 
 .author-v2-name-watermark {
   position: absolute;
-  top: 50%;
+  top: 28%;
   left: 0;
   right: 0;
   transform: translateY(-50%);
   font-family: var(--font-heading);
-  font-size: 10vw;
+  font-size: 8.5vw;
   font-weight: 900;
-  color: rgba(0, 0, 0, 0.06);
+  color: rgba(0, 0, 0, 0.045);
   letter-spacing: 8px;
   pointer-events: none;
   white-space: nowrap;
@@ -5058,7 +5058,7 @@ img.moment-media {
   font-size: 1.15rem;
   line-height: 1.8;
   color: var(--text-secondary);
-  margin-bottom: 2rem;
+  margin-bottom: 1.75rem;
   position: relative;
   z-index: 1;
   max-width: 480px;
@@ -5068,9 +5068,10 @@ img.moment-media {
   display: flex;
   gap: 0.75rem;
   flex-wrap: wrap;
+  margin-top: 1rem;
   margin-bottom: 2.5rem;
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .author-v2-tag {
@@ -5082,8 +5083,9 @@ img.moment-media {
   border: 1.5px solid var(--border-light);
   border-radius: 50px;
   color: var(--text-primary);
-  background: transparent;
+  background: #ffffff;
   transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
 .author-v2-tag:hover {
@@ -5128,13 +5130,17 @@ img.moment-media {
   }
 
   .author-v2-content {
-    padding: 3rem 2rem;
+    padding: 3.5rem 2rem 2.5rem;
     text-align: center;
     align-items: center;
+    position: relative;
   }
 
   .author-v2-name-watermark {
+    top: 16%;
+    transform: translateY(-50%);
     font-size: 15vw;
+    color: rgba(0, 0, 0, 0.04);
   }
 
   .author-v2-name {
@@ -5143,10 +5149,13 @@ img.moment-media {
 
   .author-v2-tags {
     justify-content: center;
+    margin-top: 1.5rem;
+    margin-bottom: 2.25rem;
   }
 
   .author-v2-bio {
     text-align: center;
+    margin-bottom: 1.5rem;
   }
 }
 
@@ -5156,11 +5165,14 @@ img.moment-media {
   }
 
   .author-v2-content {
-    padding: 2rem 1.25rem;
+    padding: 2.5rem 1.25rem 2rem;
   }
 
   .author-v2-name-watermark {
-    font-size: 18vw;
+    top: 14%;
+    transform: translateY(-50%);
+    font-size: 16vw;
+    color: rgba(0, 0, 0, 0.035);
   }
 
   .author-v2-name {
@@ -5169,11 +5181,19 @@ img.moment-media {
 
   .author-v2-bio {
     font-size: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .author-v2-tags {
+    margin-top: 1.25rem;
+    margin-bottom: 2rem;
+    gap: 0.5rem;
   }
 
   .author-v2-tag {
-    font-size: 0.7rem;
-    padding: 0.4rem 1rem;
+    font-size: 0.72rem;
+    padding: 0.45rem 1rem;
+    background: #ffffff;
   }
 }
 
