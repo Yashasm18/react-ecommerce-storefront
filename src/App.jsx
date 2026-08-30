@@ -1426,7 +1426,7 @@ function App() {
 
       {/* ===== HERO ===== */}
       <section id="home" className="page-section hero" onMouseMove={handleHeroMouseMove}>
-        <div className="hero-accent-bar"></div>
+        <div className="hero-bg-image"></div>
         <div className="container hero-grid">
           <div className="hero-left">
             <div className="hero-bestseller-badge fade-in-up">
@@ -1441,10 +1441,12 @@ function App() {
               You Made Me<br /><em>Qu<span className="hero-i-wrapper"><span className="hero-i-letter">i</span><span className="hero-heart">{"\u2665\uFE0E"}</span></span>et.</em>
             </h1>
 
-            <p className="hero-subtitle fade-in-up delay-2">
-              An emotional journey exploring quiet love, heartbreak, and healing. Written for the hearts that feel deeply but love silently.
-            </p>
-            <p className="hero-subtitle fade-in-up delay-2" style={{ fontSize: '1.05rem', marginTop: '-1.5rem', color: 'var(--text-primary)', fontWeight: 500 }}>
+            <div className="hero-subtitle-card fade-in-up delay-2">
+              <p className="hero-subtitle">
+                An emotional journey exploring quiet love, heartbreak, and healing. Written for the hearts that feel deeply but love silently.
+              </p>
+            </div>
+            <p className="hero-subtitle-platform fade-in-up delay-2">
               Now available on <strong>Notion Press</strong> — India's leading self-publishing platform.
             </p>
 

@@ -110,12 +110,15 @@ button {
   left: 0;
   right: 0;
   z-index: 1000;
-  background: var(--bg-primary);
-  border-bottom: 1px solid var(--border-light);
-  transition: box-shadow 0.3s ease;
+  background: var(--bg-cream);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
 }
 
 .navbar.scrolled {
+  background: rgba(250, 248, 245, 0.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 2px 20px rgba(0,0,0,0.08);
 }
 
@@ -402,18 +405,36 @@ button {
 
 /* ===== HERO ===== */
 .hero {
-  background: var(--bg-primary);
   position: relative;
   overflow: hidden;
+  background: #1a1a1a;
+}
+
+/* Full-bleed background image */
+.hero-bg-image {
+  position: absolute;
+  inset: 0;
+  background: url('/hero-bg.jpg') center center / cover no-repeat;
+  z-index: 0;
+}
+
+/* Dark gradient overlay for text readability */
+.hero-bg-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(15, 12, 10, 0.88) 0%,
+    rgba(15, 12, 10, 0.75) 40%,
+    rgba(15, 12, 10, 0.45) 70%,
+    rgba(15, 12, 10, 0.30) 100%
+  );
+  z-index: 1;
 }
 
 .hero-accent-bar {
-  position: absolute;
-  top: 72px;
-  left: 0;
-  right: 0;
-  height: 6px;
-  background: var(--accent);
+  display: none;
 }
 
 .hero-grid {
@@ -422,6 +443,8 @@ button {
   gap: 4rem;
   align-items: center;
   min-height: calc(100vh - 72px);
+  position: relative;
+  z-index: 2;
 }
 
 .hero-left {
@@ -432,7 +455,7 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  background: linear-gradient(135deg, rgba(254, 243, 199, 0.95), rgba(253, 230, 138, 0.75));
+  background: linear-gradient(135deg, rgba(254, 243, 199, 0.95), rgba(253, 230, 138, 0.85));
   color: #92400e;
   padding: 0.55rem 1.2rem;
   border-radius: 50px;
@@ -479,8 +502,8 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: var(--accent-light);
-  color: var(--accent-dark);
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
   padding: 0.5rem 1rem;
   border-radius: 50px;
   font-family: var(--font-accent);
@@ -489,6 +512,7 @@ button {
   text-transform: uppercase;
   letter-spacing: 1.5px;
   margin-bottom: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .hero-badge-dot {
@@ -504,10 +528,12 @@ button {
   50% { transform: scale(1.5); opacity: 0.7; }
 }
 
+/* Hero title — white on dark background */
 .hero-title {
   font-size: 4.2rem;
   margin-bottom: 1.5rem;
   letter-spacing: -1px;
+  color: #ffffff;
 }
 
 .hero-title em {
@@ -515,14 +541,39 @@ button {
   font-style: italic;
 }
 
-.hero-subtitle {
-  font-size: 1.15rem;
-  color: var(--text-secondary);
-  margin-bottom: 2.5rem;
-  max-width: 480px;
-  line-height: 1.8;
+/* Subtitle in semi-transparent card */
+.hero-subtitle-card {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 1.25rem 1.75rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  max-width: 520px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
+.hero-subtitle {
+  font-size: 1.05rem;
+  color: #333333;
+  max-width: 480px;
+  line-height: 1.75;
+  margin-bottom: 0;
+}
+
+.hero-subtitle-platform {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 2rem;
+  max-width: 480px;
+  line-height: 1.6;
+}
+
+.hero-subtitle-platform strong {
+  color: #ffffff;
+}
+
+/* CTA buttons — dark solid for cinematic hero */
 .hero-actions {
   display: flex;
   gap: 1rem;
@@ -554,7 +605,7 @@ button {
 
 .btn-secondary {
   background: transparent;
-  color: var(--text-primary);
+  color: #ffffff;
   padding: 1rem 2rem;
   font-family: var(--font-accent);
   font-weight: 700;
@@ -564,22 +615,23 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
-  border: 2px solid var(--text-primary);
+  border: 2px solid rgba(255, 255, 255, 0.6);
   transition: all 0.3s ease;
 }
 
 .btn-secondary:hover {
-  background: var(--text-primary);
-  color: #fff;
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #ffffff;
   transform: translateY(-2px);
 }
 
+/* Stats bar — white text on dark hero */
 .hero-stats {
   display: flex;
   align-items: flex-end;
   gap: 2.5rem;
   padding-top: 2rem;
-  border-top: 1px solid var(--border-light);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .stat-item {
@@ -593,7 +645,7 @@ button {
   font-family: var(--font-heading);
   font-size: 2rem;
   font-weight: 900;
-  color: var(--text-primary);
+  color: #ffffff;
   display: flex;
   align-items: flex-end;
   gap: 0.25rem;
@@ -613,10 +665,11 @@ button {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  color: var(--text-light);
+  color: rgba(255, 255, 255, 0.55);
   margin-top: 0.25rem;
 }
 
+/* Right side — book cover showcase */
 .hero-right {
   position: relative;
   display: flex;
@@ -637,7 +690,7 @@ button {
   max-width: 420px;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.05);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.08);
 }
 
 .hero-carousel-img {
@@ -712,7 +765,7 @@ button {
   font-size: 0.95rem;
   text-align: center;
   line-height: 1.1;
-  box-shadow: 0 10px 20px rgba(255, 184, 0, 0.3);
+  box-shadow: 0 10px 30px rgba(245, 166, 35, 0.4);
   z-index: 10;
   animation: pulse-badge 2s infinite;
   padding: 10px;
@@ -732,16 +785,7 @@ button {
 }
 
 .hero-bg-circle {
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  background: var(--accent);
-  border-radius: 50%;
-  opacity: 0.08;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 0;
+  display: none;
 }
 
 /* ===== ANNOUNCEMENT BAR ===== */
