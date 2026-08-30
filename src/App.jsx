@@ -2604,7 +2604,7 @@ function App() {
               </div>
               <div className="book-copies-badge">
                 <span style={{ fontSize: '1.2rem', marginBottom: '2px' }}>🎉</span>
-                <span>53,000+ SOLD</span>
+                <span>95,000+ SOLD</span>
                 IN 3 MONTHS
               </div>
             </div>
@@ -2632,11 +2632,11 @@ function App() {
           <div className="spotlight-right">
             <div className="spotlight-tag">🏆 Official Spotlight</div>
             <h2 className="spotlight-title">
-              THE STORY THAT<br />REACHED 53K<br />HEARTS.
+              THE STORY THAT<br />REACHED 95K<br />HEARTS.
             </h2>
             <div className="spotlight-stats">
               <div className="spotlight-stat">
-                <div className="spotlight-stat-number">53,000+</div>
+                <div className="spotlight-stat-number">95,000+</div>
                 <div className="spotlight-stat-label">COPIES SOLD</div>
               </div>
               <div className="spotlight-stat-divider"></div>
@@ -2646,7 +2646,7 @@ function App() {
               </div>
             </div>
             <p className="spotlight-desc">
-              Experience the raw, emotional journey of quiet love and healing. <strong>"You Made Me Quiet"</strong> has crossed the 53,000+ copy milestone — making it one of India's most beloved independent books of 2026.
+              Experience the raw, emotional journey of quiet love and healing. <strong>"You Made Me Quiet"</strong> has crossed the 95,000+ copy milestone — making it one of India's most beloved independent books of 2026.
             </p>
             <button className="btn-primary" onClick={() => navigateTo('shop')}>
               <ShoppingCart size={18} />
