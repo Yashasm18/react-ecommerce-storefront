@@ -20,7 +20,7 @@
 
 <br>
 
-### 🏆 #1 Notion Press Bestseller · 30,000+ Copies Sold
+### 🏆 #1 Notion Press Bestseller · 95,000+ Books Sold
 ###     Made for readers who actually read through their heart and maintain the same passion!
 
 *As of July 2026*
@@ -174,7 +174,7 @@ Built and optimized for high-speed performance, accessibility, and search engine
 > *"Seamless shopping experience with instant confirmation and fast delivery."* — **Verified Buyer**
 
 - 🏆 **#1 Notion Press Bestseller**
-- 📦 **30,000+ Copies Sold**
+- 📦 **95,000+ Books Sold**
 - 🌍 **Available Worldwide** across Amazon, Flipkart, Notion Press, and [wordsofvamshi.com](https://wordsofvamshi.com)
 
 ---

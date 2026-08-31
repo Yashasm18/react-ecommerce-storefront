@@ -2406,6 +2406,8 @@ function App() {
         <div className="ticker-track">
           <span className="ticker-item">🏆 Top #1 Notion Press Bestseller • 2026</span>
           <span className="ticker-item">✦</span>
+          <span className="ticker-item">🎉 95,000+ Books Sold Worldwide</span>
+          <span className="ticker-item">✦</span>
           <span className="ticker-item">A dream that went global 📚 Released in 150+ countries</span>
           <span className="ticker-item">✦</span>
           <span className="ticker-item">📚 Available on: Amazon, Flipkart and Notion Press!</span>
@@ -2417,6 +2419,8 @@ function App() {
           <span className="ticker-item">Every copy includes a Chikkaballapur-themed bookmark + personal letter from Vamshi.</span>
           <span className="ticker-item">✦</span>
           <span className="ticker-item">🏆 Top #1 Notion Press Bestseller • 2026</span>
+          <span className="ticker-item">✦</span>
+          <span className="ticker-item">🎉 95,000+ Books Sold Worldwide</span>
           <span className="ticker-item">✦</span>
           <span className="ticker-item">A dream that went global 📚 Released in 150+ countries</span>
           <span className="ticker-item">✦</span>
@@ -2637,7 +2641,7 @@ function App() {
             <div className="spotlight-stats">
               <div className="spotlight-stat">
                 <div className="spotlight-stat-number">95,000+</div>
-                <div className="spotlight-stat-label">COPIES SOLD</div>
+                <div className="spotlight-stat-label">BOOKS SOLD</div>
               </div>
               <div className="spotlight-stat-divider"></div>
               <div className="spotlight-stat">
